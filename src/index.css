@@ -1,0 +1,70 @@
+@import "tailwindcss";
+
+@font-face {
+  font-family: bebas;
+  src: url("../src/fonts/BebasNeue-Regular.woff2") format("woff2");
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Playwrite Australia QLD";
+  src: url("../src/fonts/PlaywriteAUQLD-Regular.woff2") format("woff2");
+  font-display: swap;
+}
+
+@font-face {
+  font-family: inter;
+  src: url("../src/fonts/Inter_24pt-Regular.woff2") format("woff2");
+  font-display: swap;
+}
+
+@font-face {
+  font-family: interBold;
+  src: url("../src/fonts/Inter_18pt-SemiBold.woff2") format("woff2");
+  font-display: swap;
+}
+
+@theme {
+  --font-sans: inter, "sans-serif";
+  --font-bebas: bebas, "sans-serif";
+  --font-Cr: Playwrite Australia QLD, "latin";
+  --font-in: inter, "sans-serif";
+  --font-INB: interBold, "sans-serif";
+}
+
+
+:root {
+  font-family: inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  font-family: inter, sans-serif;
+}
+
+@layer utilities {
+  .absolute-center {
+    @apply absolute top-1/2
+  }
+
+  .mask-clip-path {
+    clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+  }
+}
+
+@theme inline {
+  --animate-scroll: scroll var(--animation-duration, 40s) var(--animation-direction, forwards) linear infinite;
+
+  @keyframes scroll {
+    to {
+      transform: translate(calc(-50% - 0.5rem));
+    }
+  }
+}
