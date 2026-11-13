@@ -202,6 +202,14 @@ export function Example() {
 
             <Accordion className="cursor-pointer hover:text-blue-400 py-1" title="ERP Solutions">
               <Link
+                to="/ERPSolutions"
+                onClick={() => setActive(false)}
+                onMouseEnter={() => setBgImage(imageMap.about)}
+                className="block cursor-pointer font-bold text-orange-400 hover:text-orange-300 py-1"
+              >
+                All ERP Solutions
+              </Link>
+              <Link
                 to="/ERPservices/Education"
                 onClick={() => setActive(false)}
                 onMouseEnter={() => setBgImage(imageMap.about)}

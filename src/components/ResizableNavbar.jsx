@@ -99,15 +99,19 @@ export const NavItems = ({ items, className, onItemClick, visible }) => {
 
       return (
         <div key={idx} className='relative group text-left'>
-          <a
-            href={child.link || '#'}
+          <Link
+            to={child.link || '#'}
+            onClick={() => {
+              setHovered(null)
+              onItemClick && onItemClick()
+            }}
             className={cn(
               'block px-4 py-2 text-sm font-in hover:bg-orange-300 hover:text-blue-950 rounded-full whitespace-nowrap',
               visible ? 'text-white' : 'text-blue-950'
             )}
           >
             {child.name} {hasSubChildren ? '▸' : ''}
-          </a>
+          </Link>
           {hasSubChildren && (
             <div
               className={cn(
@@ -145,10 +149,11 @@ export const NavItems = ({ items, className, onItemClick, visible }) => {
             onMouseLeave={() => setHovered(null)}
             ref={el => (dropdownRefs.current[idx] = el)}
           >
-            <a
-              href={item.link || '#'}
+            <Link
+              to={item.link || '#'}
               onClick={() => {
                 setActiveIndex(idx)
+                setHovered(null)
                 onItemClick && onItemClick()
               }}
               className={cn(
@@ -168,7 +173,7 @@ export const NavItems = ({ items, className, onItemClick, visible }) => {
               <span className='relative z-20'>
                 {item.name} {isDropdown && '▾'}
               </span>
-            </a>
+            </Link>
 
             {isDropdown && (
               <AnimatePresence>

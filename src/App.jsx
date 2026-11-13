@@ -79,6 +79,9 @@ function App() {
         <Route path="/DigitalMarketing" element={<DigitalMarketing />} />
         <Route path="/MobileApplications" element={<MobileApplication />} />
         <Route path="/ERPSolutions" element={<ERPSolutions />} />
+        <Route path="/ERPservices" element={<ERPSolutions />} />
+        <Route path="/ERPservices/Services" element={<ERPSolutions />} />
+        <Route path="/erp-services" element={<ERPSolutions />} />
         <Route path="/WebPortals" element={<WebPortals />} />
         <Route path="/all-projects" element={<AllProjects />} />
         <Route path="/OurGallery" element={<Gallery />} />
@@ -103,6 +106,7 @@ function App() {
         <Route path="/CareerWithUs" element={<CareerWithUs />} />
         <Route path="/applyforCareer" element={<CareerApply />} />
         <Route path="/ClientRegister" element={<RegistrationForm />} />
+        <Route path="/clientRegister" element={<RegistrationForm />} />
         <Route path="*" element={<PageNotFound />} />
       </Routes>
     </Suspense>
