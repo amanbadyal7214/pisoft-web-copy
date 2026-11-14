@@ -16,7 +16,7 @@ import {
   Lock,
   Building2,
   ChevronDown,
-  Smartphone,
+  Globe,
   Send,
   CheckCircle,
   Workflow,
@@ -129,7 +129,7 @@ export default function WebApplication() {
     }
   }
 
-  // 4 Core Technology Pillars Data
+  // 4 Core Technology Pillars Data (Strictly Web & Website Engineering)
   const techPillars = [
     {
       id: 'mern',
@@ -137,7 +137,7 @@ export default function WebApplication() {
       badge: 'Primary Web Stack',
       icon: Code2,
       tagline: 'MongoDB • Express.js • React 19 • Node.js',
-      desc: 'We engineer high-performance Single Page Applications (SPAs) and real-time cloud portals using React 19 and Node.js async event loops.',
+      desc: 'We engineer high-performance Single Page Applications (SPAs), dynamic enterprise websites, and interactive portals using React 19 and Node.js async event loops.',
       capabilities: [
         'React 19 with Vite & modern component architecture',
         'Node.js & Express async microservices with WebSockets',
@@ -151,33 +151,33 @@ export default function WebApplication() {
       ]
     },
     {
-      id: 'reactnative',
-      title: 'React Native Mobile & Web',
-      badge: 'Universal Mobile',
-      icon: Smartphone,
-      tagline: 'React Native • iOS • Android • Web',
-      desc: 'Build once and deploy across iOS, Android, and web browsers, slashing dual development costs while delivering fluid 60 FPS native performance.',
+      id: 'webportals',
+      title: 'Next.js & Cloud Web Portals',
+      badge: 'Modern Web & SaaS',
+      icon: Globe,
+      tagline: 'Next.js 15 • React 19 • Headless CMS • Cloud SaaS',
+      desc: 'We architect lightning-fast enterprise websites, server-rendered portals, and SaaS dashboards with instant page loads, dynamic caching, and 100/100 Core Web Vitals.',
       capabilities: [
-        'Over 90% codebase sharing between Android, iOS, and Web',
-        'Native device sensors: Camera, GPS, Biometrics & Push',
-        'Offline-first data caching with SQLite & background sync',
-        'Automated App Store & Google Play Store release pipelines'
+        'Server-Side Rendering (SSR) & Static Site Generation (SSG)',
+        'Headless CMS, E-Commerce & custom customer self-service portals',
+        'Edge caching, SEO-first architecture & automated asset minification',
+        'Enterprise RBAC access control & real-time analytics dashboards'
       ],
       metrics: [
-        { val: '2-in-1', label: 'iOS + Android' },
-        { val: '60 FPS', label: 'Native Fluidity' },
-        { val: '-50%', label: 'Dev Overhead' }
+        { val: '100/100', label: 'Lighthouse SEO' },
+        { val: '< 0.5s', label: 'First Load' },
+        { val: '0% Lag', label: 'Edge CDN' }
       ]
     },
     {
       id: 'springboot',
-      title: 'Java & Spring Boot Enterprise',
+      title: 'Java & Spring Boot Enterprise Web',
       badge: 'Enterprise Backend',
       icon: Server,
       tagline: 'Java 21 LTS • Spring Boot 3 • JPA / Hibernate',
-      desc: 'For mission-critical banking, credit society software, and complex ERP systems, our senior Java architects engineer zero-downtime microservices.',
+      desc: 'For mission-critical banking portals, credit society web software, and complex ERP systems, our senior Java architects engineer zero-downtime web services.',
       capabilities: [
-        'Spring Boot 3 cloud-native microservices with Docker',
+        'Spring Boot 3 cloud-native web microservices with Docker',
         'Spring Security with OAuth2, JWT & multi-tenant isolation',
         'Hibernate & Spring Data JPA for complex relational data',
         'Asynchronous Kafka / RabbitMQ event-driven messaging'
@@ -190,13 +190,13 @@ export default function WebApplication() {
     },
     {
       id: 'python',
-      title: 'Python (Django, FastAPI & Flask)',
+      title: 'Python Web Ecosystem (Django & FastAPI)',
       badge: 'Async & AI Ready',
       icon: Zap,
       tagline: 'FastAPI Async • Django MVC • Flask Microservices',
-      desc: 'Harness the Python web ecosystem for blazing-fast async REST endpoints with FastAPI, enterprise admin backbones with Django, and AI-ready pipelines.',
+      desc: 'Harness the Python web ecosystem for blazing-fast async REST endpoints with FastAPI, enterprise admin backbones with Django, and AI-ready web platforms.',
       capabilities: [
-        'FastAPI for high-throughput async microservices (<5ms latency)',
+        'FastAPI for high-throughput async web services (<5ms latency)',
         'Django for robust enterprise admin dashboards and ORM models',
         'Flask for lightweight decoupled serverless webhooks',
         'Seamless integration with AI models, analytics & automation'
@@ -220,8 +220,8 @@ export default function WebApplication() {
       a: 'If you need rapid startup prototyping, real-time collaboration, or a unified JavaScript codebase, MERN Stack is ideal. For mission-critical banking, financial accounting, and high-throughput corporate microservices, Java Spring Boot is the gold standard. For high-speed async APIs or AI-integrated platforms, Python (FastAPI/Django) offers unmatched speed and flexibility.'
     },
     {
-      q: 'Can React Native really share code between Mobile (iOS/Android) and Web?',
-      a: 'Yes. React Native enables 90%+ code sharing across iOS, Android, and Web platforms. You maintain a single codebase for business logic, state management, and user authentication, cutting your development and ongoing maintenance costs by up to 50%.'
+      q: 'How do you ensure our website or web application achieves top SEO rankings and speed?',
+      a: 'Every web application and website we develop is architected for 90+ Google Core Web Vitals scores. We optimize server-side rendering, asset compression, semantic schema markup, clean responsive CSS, and high-performance cloud CDN distribution so your website loads in under a second and ranks high on Google search.'
     },
     {
       q: 'What is your agile sprint cadence and how will we track development progress?',
@@ -232,19 +232,19 @@ export default function WebApplication() {
   return (
     <main className='overflow-x-hidden w-full max-w-full bg-white font-in text-slate-800 selection:bg-orange-500 selection:text-white'>
       <Helmet>
-        <title>Web & Mobile Application Engineering | MERN, Java Spring Boot, Python, React Native | Pisoft Mohali</title>
+        <title>Custom Web Application Development | MERN, Java Spring Boot, Python, Next.js | Pisoft Mohali</title>
         <meta
           name='description'
-          content='Pisoft Informatics is a premier software engineering company building high-speed web and cross-platform mobile applications using MERN Stack, React Native, Java Spring Boot, and Python in Mohali, Punjab.'
+          content='Pisoft Informatics is a premier software engineering company building high-speed websites, custom web applications, and enterprise cloud portals using MERN Stack, Java Spring Boot, Python, and Next.js in Mohali, Punjab.'
         />
         <meta
           name='keywords'
-          content='MERN stack development Mohali, React Native developers Punjab, Java Spring Boot microservices, Python Django FastAPI Flask company India, custom software engineering Pisoft Informatics'
+          content='custom web application development Mohali, website development company Punjab, MERN stack web development, Java Spring Boot web portals, Python Django FastAPI web solutions, enterprise web portals India, Pisoft Informatics'
         />
-        <meta property='og:title' content='Web & Mobile Application Engineering | MERN, Java Spring Boot, Python | Pisoft Informatics' />
+        <meta property='og:title' content='Custom Web Application & Website Development | MERN, Java, Python | Pisoft Informatics' />
         <meta
           property='og:description'
-          content='Engineered with MERN, Java Spring Boot, Python & React Native. Explore Pisoft Informatics custom web engineering and full-stack microservices.'
+          content='Engineered with MERN, Java Spring Boot, Python & modern web architectures. Explore Pisoft Informatics custom web application and portal engineering.'
         />
         <meta property='og:url' content='https://Pisoftinformatics.com/WebApplications' />
         <link rel='canonical' href='https://Pisoftinformatics.com/WebApplications' />
@@ -262,10 +262,10 @@ export default function WebApplication() {
               <span>Pisoft Digital Engineering</span>
             </div>
             <h1 className='text-4xl sm:text-5xl md:text-6xl font-INB tracking-tight text-white'>
-              SOFTWARE ENGINEERING
+              WEBSITES & WEB APPLICATIONS
             </h1>
             <p className='text-slate-300 text-xs sm:text-sm mt-2 font-mono'>
-              MERN Stack • React Native • Java Spring Boot • Python (Django, FastAPI, Flask)
+              MERN Stack • Python (Django, FastAPI) • Java Spring Boot • Next.js Web Portals
             </p>
           </div>
         </div>
@@ -378,9 +378,9 @@ export default function WebApplication() {
               >
                 Engineering High-Performance <br />
                 <span className='text-orange-500'>
-                  Web & Mobile Applications
+                  Custom Web Applications
                 </span> <br />
-                for Enterprise Scale
+                & Enterprise Websites
               </motion.h1>
 
               {/* Subtitle */}
@@ -390,7 +390,7 @@ export default function WebApplication() {
                 transition={{ duration: 0.8, delay: 0.2 }}
                 className='text-slate-700 text-sm sm:text-base md:text-lg lg:text-xl font-in leading-relaxed mb-7 max-w-3xl mx-auto drop-shadow-2xs'
               >
-                Pisoft Informatics is a premier software engineering firm delivering custom cloud portals and universal mobile apps. Handcrafted with <strong>MERN Stack</strong>, <strong>React Native</strong>, <strong>Java Spring Boot</strong>, and <strong>Python (Django, FastAPI, Flask)</strong> in Mohali, Punjab.
+                Pisoft Informatics is a premier web engineering firm delivering high-speed websites, custom cloud portals, and enterprise web platforms. Handcrafted with <strong>MERN Stack</strong>, <strong>Java Spring Boot</strong>, <strong>Python (Django, FastAPI, Flask)</strong>, and <strong>Next.js</strong> in Mohali, Punjab.
               </motion.p>
 
               {/* Dual Action CTAs */}
@@ -617,7 +617,7 @@ export default function WebApplication() {
                   Technical Discovery Call
                 </span>
                 <h2 className='text-2xl sm:text-3xl md:text-4xl font-INB text-[#182b67] leading-tight'>
-                  Initiate Your Web & Mobile Project Discovery <br />
+                  Initiate Your Web Project Discovery <br />
                   <span className='text-orange-500'>Direct with Software Architects in Mohali</span>
                 </h2>
                 <p className='text-slate-600 mt-2 text-sm sm:text-base'>
@@ -631,10 +631,10 @@ export default function WebApplication() {
                 <div className='lg:col-span-7 rounded-2xl sm:rounded-3xl p-6 sm:p-8 bg-white border border-slate-200 shadow-md flex flex-col justify-between'>
                   <div>
                     <h3 className='text-xl sm:text-2xl font-INB text-[#182b67] mb-1'>
-                      Web & Mobile Project Specification Form
+                      Web Project Specification Form
                     </h3>
                     <p className='text-slate-600 text-xs sm:text-sm leading-relaxed mb-5'>
-                      Share your target application parameters to connect with our senior engineering team.
+                      Share your target website or web application parameters to connect with our senior engineering team.
                     </p>
 
                     {formSubmitted ? (
@@ -719,7 +719,7 @@ export default function WebApplication() {
                         <div className='grid sm:grid-cols-2 gap-4'>
                           <div>
                             <label className='block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5'>
-                              Application Category
+                              Web Project Category
                             </label>
                             <select
                               name='appCategory'
@@ -730,7 +730,7 @@ export default function WebApplication() {
                               <option>Full MERN Stack Web Platform (MongoDB, Express, React, Node)</option>
                               <option>Java & Spring Boot Enterprise Microservices</option>
                               <option>Python Web System (Django / FastAPI / Flask)</option>
-                              <option>React Native Universal App (iOS, Android & Web)</option>
+                              <option>Enterprise Web Portal & Next.js Headless CMS</option>
                               <option>Custom SaaS & Multi-Tenant Cloud Platform</option>
                               <option>Headless E-Commerce & Marketplace Architecture</option>
                             </select>
