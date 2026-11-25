@@ -622,7 +622,7 @@ export default function ERPSolutions() {
           </div>
 
           {/* LIGHT THEME HERO SECTION WITH EXPANSIVE FULL-WIDTH RESPONSIVE LAYOUT */}
-          <header className='relative pt-24 sm:pt-26 lg:pt-28 pb-8 sm:pb-12 bg-white overflow-hidden border-b border-slate-100 w-full'>
+          <header className='relative pt-30 sm:pt-35 md:pt-40 lg:pt-45 xl:pt-50 pb-10 sm:pb-14 bg-white overflow-hidden border-b border-slate-100 w-full'>
             <div className='w-full max-w-[1850px] mx-auto px-4 sm:px-6 md:px-8 lg:px-10 xl:px-12'>
               <div className='grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 xl:gap-12 items-center w-full min-w-0'>
                 {/* Left Column: Heading, Value Proposition & Prominent CTAs */}
