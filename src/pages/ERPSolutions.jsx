@@ -44,7 +44,9 @@ import {
   FileCode2,
   Send,
   Layers,
-  Award
+  Award,
+  Boxes,
+  UserCheck
 } from 'lucide-react'
 
 import Navbar from '../components/Navbar'
@@ -64,13 +66,13 @@ export default function ERPSolutions() {
   const navigate = useNavigate()
   const [showAuthButtons, setShowAuthButtons] = useState(true)
   const [introComplete, setIntroComplete] = useState(false)
-  const [activeTab, setActiveTab] = useState('education')
+  const [activeTab, setActiveTab] = useState('real-estate')
   const [heroFeatured, setHeroFeatured] = useState('overview')
   const [showStickyBar, setShowStickyBar] = useState(false)
   const [openFaq, setOpenFaq] = useState(0)
 
   // Configurator state
-  const [cfgSector, setCfgSector] = useState('education')
+  const [cfgSector, setCfgSector] = useState('real-estate')
   const [cfgUsers, setCfgUsers] = useState('16-50')
   const [cfgDeployment, setCfgDeployment] = useState('cloud')
 
@@ -83,9 +85,27 @@ export default function ERPSolutions() {
     email: '',
     phone: '',
     organization: '',
-    sector: 'Education ERP',
+    sector: 'Real Estate ERP (REMS)',
     message: ''
   })
+
+  // Support direct hash navigation (#real-estate, #education, #inventory, #crm, #hr)
+  useEffect(() => {
+    const handleHash = () => {
+      const hash = window.location.hash.replace('#', '')
+      if (['real-estate', 'education', 'inventory', 'crm', 'hr'].includes(hash)) {
+        setActiveTab(hash)
+        setHeroFeatured(hash)
+        setTimeout(() => {
+          const el = document.getElementById('industry-suites')
+          if (el) el.scrollIntoView({ behavior: 'smooth' })
+        }, 200)
+      }
+    }
+    handleHash()
+    window.addEventListener('hashchange', handleHash)
+    return () => window.removeEventListener('hashchange', handleHash)
+  }, [])
 
   const introRef = useRef(null)
 
@@ -169,8 +189,58 @@ export default function ERPSolutions() {
     }
   }
 
-  // Data for Industry ERP Suites
+  // Data for Industry ERP Suites - ONLY Real Estate, Education, Inventory, CRM, and HR
   const erpSuites = useMemo(() => [
+    {
+      id: 'real-estate',
+      title: 'Real Estate & Property Management ERP',
+      shortTitle: 'Real Estate ERP (REMS)',
+      code: 'REMS',
+      badge: 'Real Estate & Builder ERP',
+      icon: Building2,
+      accentColor: 'from-amber-500 to-rose-600',
+      bgColor: 'bg-amber-50',
+      borderColor: 'border-amber-200',
+      textColor: 'text-amber-700',
+      mainImage: '/pibuilding.avif',
+      subImage: '/LeadManagement.webp',
+      subImageLabel: 'Property Booking & Inventory Console',
+      pageUrl: '/clientRegister',
+      tagline: 'End-to-End Property Sales, Unit Inventory, Booking Portals & Tenant Management',
+      overview:
+        'Pisoft Real Estate ERP is engineered specifically for builders, real estate developers, property management firms, and real estate brokers. From master layout planning, block/unit inventory status, site visit booking, to payment milestone scheduling, automated commission disbursements, and tenant lease agreements, our platform simplifies complex real estate operations with 100% RERA compliance.',
+      metrics: [
+        { label: 'Unit Booking Velocity', value: '4x Faster' },
+        { label: 'Payment Milestone Tracking', value: '100% Automated' },
+        { label: 'RERA & GST Compliance', value: 'Built-in & Ready' }
+      ],
+      modules: [
+        {
+          name: 'Interactive Unit Layout & Inventory',
+          desc: 'Visual interactive floor plans, tower/phase categorization, live unit booking status (Available, Blocked, Booked, Registered), and rate card configuration.'
+        },
+        {
+          name: 'Lead Capture & Site Visit CRM',
+          desc: 'Omnichannel lead aggregation (99acres, MagicBricks, Meta ads, calls), automatic sales executive assignment, and site visit GPS check-in.'
+        },
+        {
+          name: 'Payment Milestone & Demand Letters',
+          desc: 'Automated milestone triggers (slab casting, brickwork, finishing), demand letter generation, GST calculations, and payment gateway links.'
+        },
+        {
+          name: 'Broker & Channel Partner Management',
+          desc: 'Channel partner registration, tiered commission tracking, payout reconciliation, and digital broker portal.'
+        },
+        {
+          name: 'Legal, RERA & Agreement Vault',
+          desc: 'Builder-buyer agreement generation, RERA project compliance tracking, stamp duty logs, and digital document locker.'
+        },
+        {
+          name: 'Tenant Lease & Property Maintenance',
+          desc: 'Lease agreement renewals, rent collection automation, society maintenance billing, visitor management, and maintenance work orders.'
+        }
+      ]
+    },
     {
       id: 'education',
       title: 'School Management System',
@@ -222,252 +292,152 @@ export default function ERPSolutions() {
       ]
     },
     {
-      id: 'finance',
-      title: 'Credit Society Management System',
-      shortTitle: 'Credit Society (CSMS)',
-      code: 'CSMS',
-      badge: 'Cooperative & Banking ERP',
-      icon: Coins,
+      id: 'inventory',
+      title: 'Inventory & Warehouse Management ERP',
+      shortTitle: 'Inventory ERP (WMS)',
+      code: 'WMS',
+      badge: 'Inventory & Supply Chain ERP',
+      icon: Boxes,
       accentColor: 'from-emerald-500 to-teal-600',
       bgColor: 'bg-emerald-50',
       borderColor: 'border-emerald-200',
       textColor: 'text-emerald-700',
-      mainImage: '/Finance.webp',
-      subImage: '/MemberManagement.webp',
-      subImageLabel: 'Member & Deposit Portal',
-      pageUrl: '/ERPservices/Finance',
-      tagline: 'Cooperative Banking, Savings, Loans & Agent Collection Automation',
+      mainImage: '/InventoryManagement.webp',
+      subImage: '/Stocks.webp',
+      subImageLabel: 'Warehouse Stock & Barcode Console',
+      pageUrl: '/clientRegister',
+      tagline: 'Real-Time Multi-Warehouse Stock Control, Barcode Tracking & Procurement',
       overview:
-        'Our Credit Society Management System (CSMS) automates core financial operations for credit cooperative societies, microfinance institutions, and Nidhi companies. Built with stringent security and audit standards, CSMS provides end-to-end management of share capital, daily pigmy collections, recurring deposits, and loan portfolios.',
+        'Pisoft Inventory & Warehouse Management ERP optimizes your entire supply chain with multi-warehouse tracking, automated reorder thresholds, batch/serial lifecycle traceability, and purchase order fulfillment. Eliminate stockouts, prevent inventory shrinkage, and gain complete visibility into raw materials and finished goods.',
       metrics: [
-        { label: 'Daily Agent Reconciliation', value: '100% Real-Time' },
-        { label: 'Audit Preparation', value: 'Instant Trial Balance' },
-        { label: 'NPA & Default Tracking', value: 'Automated Alerts' }
+        { label: 'Stock Audit Time', value: '-70% Reduction' },
+        { label: 'Inventory Accuracy', value: '99.8% Barcode Sync' },
+        { label: 'Dead Stock Prevention', value: 'Automated Alerts' }
       ],
       modules: [
         {
-          name: 'Member KYC & Share Capital',
-          desc: 'Member registration, share allotment, dividend calculation, nominee tracking, and Aadhaar/PAN verification.'
+          name: 'Multi-Warehouse & Bin Management',
+          desc: 'Track stock across central hubs, branch godowns, transit bins, and retail locations with dynamic inter-warehouse transfer slips.'
         },
         {
-          name: 'Daily Pigmy & Agent Mobile App',
-          desc: 'Field agents collect daily savings on mobile devices with Bluetooth thermal printing and instant central sync.'
+          name: 'Barcode & QR Code Scanning',
+          desc: 'Instant goods receipt note (GRN) generation, barcode labeling, handheld scanner integration, and fast stock audits.'
         },
         {
-          name: 'FD & RD Investment Portfolios',
-          desc: 'Fixed and recurring deposit management with automated quarterly interest compounding, premature closure, and maturity calculation.'
+          name: 'Batch, Lot & Expiry Traceability',
+          desc: 'Granular batch tracking for perishables and raw items with FIFO/LIFO dispatch logic and proactive expiry alerts.'
         },
         {
-          name: 'Loan Approval & EMI Amortization',
-          desc: 'Personal, gold, and vehicle loan processing with automated EMI schedules, penalty logic, and guarantor tracking.'
+          name: 'Automated Purchase Orders & Reorders',
+          desc: 'Set safety stock and minimum reorder levels per SKU with automatic vendor RFQs, purchase orders, and supplier rate contracts.'
         },
         {
-          name: 'Double-Entry General Ledger',
-          desc: 'Automated cashbook, bank book, daybook, profit & loss statement, and regulatory balance sheets matching cooperative department bylaws.'
+          name: 'Bill of Materials (BOM) & Kitting',
+          desc: 'Multi-level BOM for assembly lines, work order issuance, raw material consumption tracking, and finished goods valuation.'
         },
         {
-          name: 'Advisor Commission Structure',
-          desc: 'Multi-tier agent hierarchy, automated commission disbursement, performance reports, and TDS deduction calculation.'
+          name: 'Stock Ageing & Valuation Analytics',
+          desc: 'Detailed reports on fast vs slow-moving stock, holding costs, dead stock depreciation, and 100% GST-compliant e-way bill generation.'
         }
       ]
     },
     {
-      id: 'healthcare',
-      title: 'Clinic & Hospital Management System',
-      shortTitle: 'Healthcare ERP (CMS)',
-      code: 'CMS',
-      badge: 'Clinical & Hospital ERP',
-      icon: Stethoscope,
-      accentColor: 'from-sky-500 to-blue-600',
-      bgColor: 'bg-sky-50',
-      borderColor: 'border-sky-200',
-      textColor: 'text-sky-700',
-      mainImage: '/Medhealth.webp',
-      subImage: '/ClinicOPD.webp',
-      subImageLabel: 'OPD Queue & EMR Console',
-      pageUrl: '/ERPservices/Medical&Healthcare',
-      tagline: 'Paperless Patient Care, OPD Scheduling & Hospital Pharmacy Operations',
-      overview:
-        'Pisoft Healthcare ERP delivers an integrated workflow system for multi-specialty clinics, diagnostic centers, and hospitals. From digital token queue display at reception to electronic medical records (EMR) and pharmacy batch inventory, it accelerates care delivery and ensures flawless billing compliance.',
-      metrics: [
-        { label: 'Patient Wait Time', value: '-45% Reduction' },
-        { label: 'Prescription Accuracy', value: 'Digital EMR' },
-        { label: 'Pharmacy Stockouts', value: 'Zero Expiry Loss' }
-      ],
-      modules: [
-        {
-          name: 'Digital Patient Registration & OPD',
-          desc: 'Instant patient UHID generation, OPD token display on waiting room monitors, and automated doctor assignment.'
-        },
-        {
-          name: 'Electronic Medical Records (EMR)',
-          desc: 'Digital prescription builder, symptoms, vitals, medical history, past lab investigations, and printed branded Rx.'
-        },
-        {
-          name: 'Doctor Appointment Scheduling',
-          desc: 'Multi-doctor calendar, slot booking, follow-up alerts, and patient SMS/WhatsApp appointment reminders.'
-        },
-        {
-          name: 'Pharmacy & Drug Expiry Control',
-          desc: 'Batch-wise medicine inventory, expiry notifications, barcode billing, and minimum re-order level triggers.'
-        },
-        {
-          name: 'Diagnostic Lab & Test Billing',
-          desc: 'Pathology/radiology test scheduling, digital lab reports with normal range flags, and direct delivery to patient phones.'
-        },
-        {
-          name: 'TPA & Ayushman Insurance Billing',
-          desc: 'Pre-authorization tracking, corporate billing, cashless insurance documentation, and package rate management.'
-        }
-      ]
-    },
-    {
-      id: 'automobile',
-      title: 'Vehicle Workshop Management System',
-      shortTitle: 'Workshop ERP (VWMS)',
-      code: 'VWMS',
-      badge: 'Automotive & Garage ERP',
-      icon: Wrench,
-      accentColor: 'from-amber-500 to-orange-600',
-      bgColor: 'bg-amber-50',
-      borderColor: 'border-amber-200',
-      textColor: 'text-amber-700',
-      mainImage: '/AutoMobile.webp',
-      subImage: '/Vehicle.webp',
-      subImageLabel: 'Digital Job Card & Bay Tracker',
-      pageUrl: '/ERPservices/AutoMobile',
-      tagline: 'Complete Garage Operations, Mechanic Bay & Spare Parts Optimization',
-      overview:
-        'VWMS by Pisoft Informatics is a dedicated ERP for automotive service centers, authorized dealerships, and multi-brand garages. It digitizes the entire vehicle lifecycle—from intake checklist and mechanic bay allocation to spare parts barcoding, insurance estimation, and automated service reminders.',
-      metrics: [
-        { label: 'Job Card Generation', value: 'Under 60 Sec' },
-        { label: 'Spare Parts Pilferage', value: '100% Accounted' },
-        { label: 'Repeat Service Rate', value: '+35% Automated CRM' }
-      ],
-      modules: [
-        {
-          name: 'Digital Intake & Inspection Sheet',
-          desc: 'Visual car body scratch diagrams, fuel gauge readings, customer complaints, and instant customer sign-off.'
-        },
-        {
-          name: 'Mechanic Bay & Labor Allocation',
-          desc: 'Assign jobs to specific technicians, log labor hours, track idle bay time, and calculate technician commission.'
-        },
-        {
-          name: 'Spare Parts Inventory & Barcoding',
-          desc: 'Real-time stock counts, OEM part number search, barcode scanning on issue, and automated supplier purchase orders.'
-        },
-        {
-          name: 'Insurance Estimation & Invoicing',
-          desc: 'Insurance claim estimates, surveyor approvals, GST invoices with split labor/parts tax slabs, and payment gateway links.'
-        },
-        {
-          name: 'Automated WhatsApp Reminders',
-          desc: 'Next service due notifications, PUC & insurance expiry alerts, and real-time "Vehicle Ready for Delivery" pings.'
-        },
-        {
-          name: 'Complete Vehicle Service History',
-          desc: 'Track full lifecycle repairs, past part replacements, odometer logs, and recurring issues across repeat visits.'
-        }
-      ]
-    },
-    {
-      id: 'travel',
-      title: 'Tours & Travels Management System',
-      shortTitle: 'Travel ERP (TTSME)',
-      code: 'TTSME',
-      badge: 'Travel & Fleet ERP',
-      icon: Plane,
-      accentColor: 'from-indigo-500 to-violet-600',
-      bgColor: 'bg-indigo-50',
-      borderColor: 'border-indigo-200',
-      textColor: 'text-indigo-700',
-      mainImage: '/Tour.webp',
-      subImage: '/TourBooking.webp',
-      subImageLabel: 'Itinerary & Booking Console',
-      pageUrl: '/ERPservices/TourTravels',
-      tagline: 'Multi-City Itinerary Planning, Fleet Dispatch & Booking Operations',
-      overview:
-        'TTSME is a specialized travel agency and fleet management ERP designed for tour operators, DMC specialists, and transport agencies. Build multi-destination itineraries in minutes, dispatch vehicles, manage hotel vouchers, and keep supplier ledgers transparent.',
-      metrics: [
-        { label: 'Quotation Turnaround', value: '5 Minutes' },
-        { label: 'Fleet Utilization', value: 'Optimized Routes' },
-        { label: 'Supplier Reconciliation', value: '100% Balanced' }
-      ],
-      modules: [
-        {
-          name: 'Dynamic Itinerary & Package Builder',
-          desc: 'Drag-and-drop days, sightseeing spots, hotels, meal plans, and auto-generate branded PDF quotations in multi-currencies.'
-        },
-        {
-          name: 'Vehicle Fleet & Driver Dispatch',
-          desc: 'Cab assignments, driver duty slips, toll & diesel allowances, mileage logs, and vehicle fitness renewals.'
-        },
-        {
-          name: 'Hotel & Flight Voucher Generator',
-          desc: 'Automated confirmation vouchers for suppliers and guests with confirmation numbers, check-in instructions, and meal inclusions.'
-        },
-        {
-          name: 'Supplier & Sub-Agent Ledgers',
-          desc: 'Track payables to hoteliers, transporters, and guides alongside receivables from retail clients and B2B travel agents.'
-        },
-        {
-          name: 'Enquiry CRM & Conversion Funnel',
-          desc: 'Capture leads from website, phone, and travel portals, assign to sales agents, and track proposal follow-ups.'
-        },
-        {
-          name: 'Payment Gateways & Partial Advances',
-          desc: 'Collect booking token amounts, schedule balance payment reminders before tour departure, and issue GST tax receipts.'
-        }
-      ]
-    },
-    {
-      id: 'custom',
-      title: 'Custom Enterprise & Multi-Branch ERP',
-      shortTitle: 'Custom Enterprise ERP',
-      code: 'CUSTOM',
-      badge: 'Custom Corporate Architecture',
-      icon: Building2,
-      accentColor: 'from-blue-600 to-indigo-700',
+      id: 'crm',
+      title: 'Enterprise CRM & Sales Pipeline ERP',
+      shortTitle: 'Enterprise CRM',
+      code: 'CRM',
+      badge: 'Customer & Sales Pipeline ERP',
+      icon: Users,
+      accentColor: 'from-blue-600 to-cyan-600',
       bgColor: 'bg-blue-50',
       borderColor: 'border-blue-200',
       textColor: 'text-blue-700',
-      mainImage: '/erp3.webp',
-      subImage: '/WhyChooseUs.webp',
-      subImageLabel: 'Multi-Warehouse Command',
+      mainImage: '/CRM.webp',
+      subImage: '/LeadManagement.webp',
+      subImageLabel: 'Omnichannel Pipeline & Deal Flow',
       pageUrl: '/clientRegister',
-      tagline: 'Tailored Workflows for Manufacturing, Distribution & Multi-Entity Groups',
+      tagline: 'Lead Nurturing, Deal Velocity, Omnichannel Communication & Client Lifecycle Automation',
       overview:
-        'When off-the-shelf software fails to fit your unique operational reality, Pisoft custom-engineers an ERP around your exact business rules. Whether you manage multi-warehouse inventory, assembly line logistics, or complex field operations, we deliver an owned, high-speed system.',
+        'Pisoft Enterprise CRM empowers high-performance sales and service teams to capture, qualify, and convert leads with precision. From multi-channel marketing attribution (Google, Meta, WhatsApp, Web forms) to visual Kanban pipelines, automated deal reminders, and customer support ticketing, close deals faster and build enduring customer relationships.',
       metrics: [
-        { label: 'Process Bottlenecks', value: '-80% Manual Work' },
-        { label: 'Data Visibility', value: 'Live Headquarters MIS' },
-        { label: 'Integration Capability', value: '100% Open APIs' }
+        { label: 'Lead Response Time', value: '< 5 Minutes' },
+        { label: 'Deal Conversion Rate', value: '+42% Pipeline Speed' },
+        { label: 'Customer Retention', value: '94% Repeat Engagement' }
       ],
       modules: [
         {
-          name: 'Multi-Warehouse & Inventory Logistics',
-          desc: 'Real-time stock transfers, bin locations, batch/serial tracking, minimum reorder triggers, and stock valuation (FIFO/LIFO).'
+          name: 'Omnichannel Lead Capture',
+          desc: 'Aggregate enquiries instantly from web forms, WhatsApp Business API, incoming phone calls, and digital ad campaigns without duplicate entries.'
         },
         {
-          name: 'Procurement & Purchase Order Approval',
-          desc: 'Multi-level requisition approvals, vendor quote comparisons, purchase orders, GRN verification, and vendor ratings.'
+          name: 'Visual Kanban Pipeline & Deal Stages',
+          desc: 'Drag-and-drop deals across customized sales stages with win-probability forecasting and revenue projection dashboards.'
         },
         {
-          name: 'HRMS & Biometric Payroll Engine',
-          desc: 'Employee master, biometric shift rules, leave management, automated salary slips with PF, ESI, TDS, and bank transfer formats.'
+          name: 'Automated Follow-ups & Reminders',
+          desc: 'Smart drip campaigns, automated email/WhatsApp sequences, and salesperson task alerts so no customer enquiry ever goes cold.'
         },
         {
-          name: 'Executive KPI & Analytics Dashboards',
-          desc: 'Live visual charts for gross margins, operational overheads, departmental efficiency, and predictive inventory needs.'
+          name: 'Quotation & Proposal Engine',
+          desc: 'Generate professional branded PDF quotations, apply volume discounts, track client view timestamps, and capture digital signatures.'
         },
         {
-          name: 'Granular Role-Based Security (RBAC)',
-          desc: 'Restrict user access to specific branches, menus, or field data with immutable audit trails of every database modification.'
+          name: 'Customer Support & Helpdesk Tickets',
+          desc: 'Post-sale service ticketing, SLA escalation matrices, customer issue tracking, and knowledge base integration.'
         },
         {
-          name: 'Open RESTful APIs & Third-Party Sync',
-          desc: 'Seamlessly interface with Tally, QuickBooks, payment gateways, WhatsApp Business, GPS trackers, and IoT machinery.'
+          name: 'Sales Performance & Commission MIS',
+          desc: 'Real-time executive performance leaderboards, target vs achievement graphs, and automated sales commission calculations.'
+        }
+      ]
+    },
+    {
+      id: 'hr',
+      title: 'Human Resources & Biometric Payroll ERP (HRMS)',
+      shortTitle: 'HRMS & Payroll ERP',
+      code: 'HRMS',
+      badge: 'Workforce & Payroll ERP',
+      icon: UserCheck,
+      accentColor: 'from-violet-600 to-purple-600',
+      bgColor: 'bg-violet-50',
+      borderColor: 'border-violet-200',
+      textColor: 'text-violet-700',
+      mainImage: '/HR.webp',
+      subImage: '/TaskManagement.webp',
+      subImageLabel: 'Employee Self-Service & Shift Desk',
+      pageUrl: '/clientRegister',
+      tagline: 'End-to-End Employee Lifecycle, Biometric Attendance, Compliance & 1-Click Payroll',
+      overview:
+        'Pisoft HRMS is an all-in-one workforce management ERP designed for modern Indian enterprises. Simplify recruitment onboarding, capture biometric and geofenced attendance, automate complex shift rosters, manage leaves, and execute 1-click payroll compliant with statutory PF, ESI, Professional Tax, and TDS regulations.',
+      metrics: [
+        { label: 'Payroll Processing Time', value: '10 Mins vs 3 Days' },
+        { label: 'Attendance Discrepancy', value: '0% Biometric Sync' },
+        { label: 'Statutory Compliance', value: '100% PF, ESI & TDS Ready' }
+      ],
+      modules: [
+        {
+          name: 'Employee 360 & Digital Onboarding',
+          desc: 'Paperless candidate onboarding, digital document locker, employment contract generation, and asset assignment tracking.'
+        },
+        {
+          name: 'Biometric & Geo-Fenced Attendance',
+          desc: 'Real-time sync with fingerprint/face-recognition hardware, mobile app check-in with GPS geofencing, and automated late-mark logic.'
+        },
+        {
+          name: 'Leave Management & Shift Rosters',
+          desc: 'Multi-tier leave approval hierarchies, compensatory off rules, paid leaves, and flexible rotational shift scheduling.'
+        },
+        {
+          name: '1-Click Statutory Payroll Engine',
+          desc: 'Automated salary computation with allowances, deductions, OT hours, PF (Provident Fund), ESIC, Professional Tax, and TDS calculations.'
+        },
+        {
+          name: 'Employee Self-Service (ESS) Portal',
+          desc: 'Web and Android portal for employees to download payslips, submit tax declarations (Form 16/12BB), and request leaves.'
+        },
+        {
+          name: 'Performance Appraisals & OKRs',
+          desc: '360-degree review cycles, goal/KPI tracking, continuous feedback loops, and appraisal hike recommendation matrices.'
         }
       ]
     }
@@ -492,12 +462,11 @@ export default function ERPSolutions() {
       '200+': 'Unlimited Modular Deployment'
     }
     const sectorLabels = {
+      'real-estate': 'Real Estate & Properties (REMS)',
       education: 'School & College Management (SMS)',
-      finance: 'Credit Society & Financial (CSMS)',
-      healthcare: 'Clinic & Hospital Healthcare (CMS)',
-      automobile: 'Vehicle Workshop & Garage (VWMS)',
-      travel: 'Tours & Travel Agency (TTSME)',
-      custom: 'Custom Enterprise & Supply Chain'
+      inventory: 'Inventory & Warehouse Management (WMS)',
+      crm: 'Enterprise Sales & Deal CRM',
+      hr: 'HRMS & Biometric Payroll (HRMS)'
     }
     return {
       sectorName: sectorLabels[cfgSector] || 'Enterprise ERP',
@@ -526,7 +495,7 @@ export default function ERPSolutions() {
     },
     {
       q: 'What happens when I register on the Client Register portal (/clientRegister)?',
-      a: 'Our Client Registration portal (/clientRegister) allows you to select your exact business nature (School, Finance, Healthcare, Workshop, etc.), pick the modular features you need, check initial licensing costs, and register your organization profile. Once submitted, our senior solution architects review your parameters, set up your preview instance, and reach out to schedule an architecture walkthrough.'
+      a: 'Our Client Registration portal (/clientRegister) allows you to select your exact business nature (Real Estate, Education, Inventory, CRM, HRMS), pick the modular features you need, check initial licensing costs, and register your organization profile. Once submitted, our senior solution architects review your parameters, set up your preview instance, and reach out to schedule an architecture walkthrough.'
     },
     {
       q: 'Can we start with basic modules and activate advanced modules later as we grow?',
@@ -540,16 +509,16 @@ export default function ERPSolutions() {
         <title>Enterprise ERP Solutions & Services | Pisoft Informatics Mohali</title>
         <meta
           name='description'
-          content='Transform your organization with custom enterprise ERP software from Pisoft Informatics. Specialized ERP solutions for Schools, Credit Societies, Healthcare Clinics, Automotive Garages, and Travel Operators. Contact our ERP specialists or register online.'
+          content='Transform your organization with custom enterprise ERP software from Pisoft Informatics. Specialized ERP solutions for Real Estate, Education, Inventory Management, CRM, and HR & Payroll. Contact our ERP specialists or register online.'
         />
         <meta
           name='keywords'
-          content='ERP solutions, custom ERP services, school management software Mohali, credit society software Punjab, clinic management system India, workshop ERP, travel ERP, enterprise resource planning, Pisoft Informatics client register, custom software development Mohali'
+          content='ERP solutions, custom ERP services, real estate ERP, school management software Mohali, inventory warehouse ERP, CRM pipeline system, HRMS payroll software, enterprise resource planning, Pisoft Informatics client register, custom software development Mohali'
         />
         <meta property='og:title' content='Enterprise ERP Solutions & Services | Pisoft Informatics' />
         <meta
           property='og:description'
-          content='Streamline your entire business with unified, modular ERP systems engineered by Pisoft Informatics. Register today for a live demo and architecture consultation.'
+          content='Streamline your entire business with unified, modular ERP systems engineered by Pisoft Informatics for Real Estate, Education, Inventory, CRM, and HR & Payroll. Register today for a live demo and architecture consultation.'
         />
         <meta property='og:url' content='https://pisoftinformatics.com/ERPSolutions' />
         <link rel='canonical' href='https://pisoftinformatics.com/ERPSolutions' />
@@ -622,7 +591,7 @@ export default function ERPSolutions() {
           </div>
 
           {/* LIGHT THEME HERO SECTION WITH EXPANSIVE FULL-WIDTH RESPONSIVE LAYOUT */}
-          <header className='relative pt-30 sm:pt-35 md:pt-40 lg:pt-45 xl:pt-50 pb-10 sm:pb-14 bg-white overflow-hidden border-b border-slate-100 w-full'>
+          <header className='relative pt-24 sm:pt-28 md:pt-30 lg:pt-34 xl:pt-36 pb-8 sm:pb-12 bg-white overflow-hidden border-b border-slate-100 w-full'>
             <div className='w-full max-w-[1850px] mx-auto px-4 sm:px-6 md:px-8 lg:px-10 xl:px-12'>
               <div className='grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 xl:gap-12 items-center w-full min-w-0'>
                 {/* Left Column: Heading, Value Proposition & Prominent CTAs */}
@@ -643,7 +612,7 @@ export default function ERPSolutions() {
 
                   {/* Value Proposition */}
                   <p className='text-slate-600 text-xs sm:text-sm md:text-base lg:text-[17px] font-in leading-relaxed mb-5 sm:mb-6 w-full min-w-0 max-w-full break-words'>
-                    Replace disconnected spreadsheets, fragile accounting files, and manual departmental bottlenecks with a unified enterprise operating system. Pisoft Informatics engineers custom, high-speed ERP software tailored for schools, credit cooperative societies, healthcare clinics, vehicle workshops, and commercial enterprises across India.
+                    Replace disconnected spreadsheets, fragile accounting files, and manual departmental bottlenecks with a unified enterprise operating system. Pisoft Informatics engineers custom, high-speed ERP software tailored for Real Estate & Builders, Educational Campuses, Multi-Warehouse Inventory, High-Velocity CRM Pipelines, and Enterprise HRMS & Payroll across India.
                   </p>
 
                   {/* Dual Action Buttons (Highlighting /clientRegister) */}
@@ -660,11 +629,11 @@ export default function ERPSolutions() {
                     </motion.button>
 
                     <a
-                      href='tel:+919781820044'
+                      href='tel:+918288029916'
                       className='w-full sm:w-auto px-4 sm:px-6 py-3.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-blue-950 font-bold text-xs sm:text-sm uppercase tracking-wider transition flex items-center justify-center gap-2'
                     >
                       <PhoneCall size={15} className='text-orange-500 flex-shrink-0' />
-                      <span>+91 97818 20044</span>
+                      <span>+91 82880 29916</span>
                     </a>
                   </div>
 
@@ -715,10 +684,11 @@ export default function ERPSolutions() {
                   <div className='flex items-center justify-start sm:justify-between bg-slate-100/90 p-1 sm:p-1.5 rounded-xl sm:rounded-2xl border border-slate-200 mb-2.5 sm:mb-3 overflow-x-auto scrollbar-none gap-1 shadow-2xs -mx-1 sm:mx-0 px-1 sm:px-1.5'>
                     {[
                       { id: 'overview', label: 'Command Center', tag: 'Overview' },
+                      { id: 'real-estate', label: 'Real Estate', tag: 'REMS' },
                       { id: 'education', label: 'School ERP', tag: 'SMS' },
-                      { id: 'finance', label: 'Credit Society', tag: 'CSMS' },
-                      { id: 'healthcare', label: 'Clinic CMS', tag: 'CMS' },
-                      { id: 'automobile', label: 'Garage ERP', tag: 'VWMS' }
+                      { id: 'inventory', label: 'Inventory', tag: 'WMS' },
+                      { id: 'crm', label: 'CRM', tag: 'CRM' },
+                      { id: 'hr', label: 'HR & Payroll', tag: 'HRMS' }
                     ].map((item) => (
                       <button
                         key={item.id}
@@ -759,72 +729,22 @@ export default function ERPSolutions() {
                     <div className='relative w-full overflow-hidden bg-slate-100'>
                       <img
                         src={
-                          heroFeatured === 'education'
+                          heroFeatured === 'real-estate'
+                            ? '/pibuilding.avif'
+                            : heroFeatured === 'education'
                             ? '/SCHOOL.webp'
-                            : heroFeatured === 'finance'
-                            ? '/Finance.webp'
-                            : heroFeatured === 'healthcare'
-                            ? '/Medhealth.webp'
-                            : heroFeatured === 'automobile'
-                            ? '/AutoMobile.webp'
+                            : heroFeatured === 'inventory'
+                            ? '/InventoryManagement.webp'
+                            : heroFeatured === 'crm'
+                            ? '/CRM.webp'
+                            : heroFeatured === 'hr'
+                            ? '/HR.webp'
                             : '/erp3.webp'
                         }
                         alt='Pisoft Enterprise ERP Interface'
                         className='w-full h-[210px] sm:h-[320px] md:h-[380px] lg:h-[420px] xl:h-[460px] 2xl:h-[490px] object-cover object-top transition-all duration-500'
                         loading='eager'
                       />
-                    </div>
-                  </div>
-
-                  {/* Mobile-Only Live Operational Badges Row */}
-                  <div className='grid grid-cols-2 gap-2 mt-2.5 sm:hidden'>
-                    <div className='p-2 rounded-xl bg-slate-50 border border-slate-200/90 flex items-center gap-2'>
-                      <img
-                        src='/SCHOOL.webp'
-                        alt='School ERP'
-                        className='w-9 h-9 rounded-lg object-cover border border-slate-200 flex-shrink-0'
-                      />
-                      <div className='text-left min-w-0'>
-                        <div className='text-[10px] font-bold text-blue-950 truncate'>School SMS</div>
-                        <div className='text-[9px] text-emerald-600 font-bold truncate'>CBSE & Fee Sync</div>
-                      </div>
-                    </div>
-
-                    <div className='p-2 rounded-xl bg-slate-50 border border-slate-200/90 flex items-center gap-2'>
-                      <img
-                        src='/Finance.webp'
-                        alt='Credit Society'
-                        className='w-9 h-9 rounded-lg object-cover border border-slate-200 flex-shrink-0'
-                      />
-                      <div className='text-left min-w-0'>
-                        <div className='text-[10px] font-bold text-blue-950 truncate'>Credit CSMS</div>
-                        <div className='text-[9px] text-orange-600 font-bold truncate'>Daily Agent App</div>
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* Tablet & Desktop Floating Overlays */}
-                  <div className='hidden sm:flex absolute -bottom-4 -left-3 p-3 rounded-2xl bg-white/95 backdrop-blur-md border border-slate-200 shadow-xl items-center gap-3 max-w-[240px]'>
-                    <img
-                      src='/SCHOOL.webp'
-                      alt='School ERP'
-                      className='w-12 h-12 rounded-xl object-cover border border-slate-200 flex-shrink-0'
-                    />
-                    <div className='text-left'>
-                      <div className='text-xs font-bold text-blue-950 leading-tight'>School ERP (SMS)</div>
-                      <div className='text-[10px] text-emerald-600 font-bold mt-0.5'>Fee & Exam Engine Active</div>
-                    </div>
-                  </div>
-
-                  <div className='hidden sm:flex absolute -top-3 -right-3 p-3 rounded-2xl bg-white/95 backdrop-blur-md border border-slate-200 shadow-xl items-center gap-3 max-w-[250px]'>
-                    <img
-                      src='/Finance.webp'
-                      alt='Credit Society'
-                      className='w-12 h-12 rounded-xl object-cover border border-slate-200 flex-shrink-0'
-                    />
-                    <div className='text-left'>
-                      <div className='text-xs font-bold text-blue-950 leading-tight'>Credit Society (CSMS)</div>
-                      <div className='text-[10px] text-orange-600 font-bold mt-0.5'>Daily Agent Mobile App Sync</div>
                     </div>
                   </div>
                 </div>
@@ -857,6 +777,14 @@ export default function ERPSolutions() {
               <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4 lg:gap-5 xl:gap-6'>
                 {[
                   {
+                    id: 'real-estate',
+                    title: 'Real Estate & Property',
+                    badge: 'Real Estate REMS',
+                    image: '/pibuilding.avif',
+                    link: '/clientRegister',
+                    highlight: 'Units, Bookings, Milestones & RERA Agreements'
+                  },
+                  {
                     id: 'education',
                     title: 'School Management',
                     badge: 'Education SMS',
@@ -865,36 +793,28 @@ export default function ERPSolutions() {
                     highlight: 'Admissions, Fees, Exams & Student Portals'
                   },
                   {
-                    id: 'finance',
-                    title: 'Credit Society',
-                    badge: 'Banking CSMS',
-                    image: '/Finance.webp',
-                    link: '/ERPservices/Finance',
-                    highlight: 'Deposits, Loans, Daybook & Field Agent App'
+                    id: 'inventory',
+                    title: 'Inventory & Warehouse',
+                    badge: 'Inventory WMS',
+                    image: '/InventoryManagement.webp',
+                    link: '/clientRegister',
+                    highlight: 'Multi-Warehouse, Barcode Scanning & Reorders'
                   },
                   {
-                    id: 'healthcare',
-                    title: 'Clinic & Hospital',
-                    badge: 'Healthcare CMS',
-                    image: '/Medhealth.webp',
-                    link: '/ERPservices/Medical&Healthcare',
-                    highlight: 'OPD Queues, EMR Rx & Pharmacy Inventory'
+                    id: 'crm',
+                    title: 'Enterprise Sales CRM',
+                    badge: 'Pipeline CRM',
+                    image: '/CRM.webp',
+                    link: '/clientRegister',
+                    highlight: 'Lead Capture, Deal Stages & Quotations'
                   },
                   {
-                    id: 'automobile',
-                    title: 'Vehicle Workshop',
-                    badge: 'Garage VWMS',
-                    image: '/AutoMobile.webp',
-                    link: '/ERPservices/AutoMobile',
-                    highlight: 'Job Cards, Mechanic Bay & Spare Parts'
-                  },
-                  {
-                    id: 'travel',
-                    title: 'Tours & Travels',
-                    badge: 'Travel TTSME',
-                    image: '/Tour.webp',
-                    link: '/ERPservices/TourTravels',
-                    highlight: 'Itineraries, Fleet Dispatch & Vouchers'
+                    id: 'hr',
+                    title: 'HRMS & Payroll ERP',
+                    badge: 'Workforce HRMS',
+                    image: '/HR.webp',
+                    link: '/clientRegister',
+                    highlight: 'Biometric Attendance, Shifts & 1-Click Payroll'
                   }
                 ].map((card) => (
                   <div
@@ -1209,12 +1129,11 @@ export default function ERPSolutions() {
                     </label>
                     <div className='space-y-2'>
                       {[
-                        { id: 'education', name: 'School / College (SMS)' },
-                        { id: 'finance', name: 'Credit Society (CSMS)' },
-                        { id: 'healthcare', name: 'Clinic / Hospital (CMS)' },
-                        { id: 'automobile', name: 'Vehicle Workshop (VWMS)' },
-                        { id: 'travel', name: 'Tours & Travels (TTSME)' },
-                        { id: 'custom', name: 'Custom Manufacturing' }
+                        { id: 'real-estate', name: 'Real Estate & Properties (REMS)' },
+                        { id: 'education', name: 'School / College Education (SMS)' },
+                        { id: 'inventory', name: 'Inventory & Warehouse (WMS)' },
+                        { id: 'crm', name: 'Enterprise Sales CRM' },
+                        { id: 'hr', name: 'HRMS & Biometric Payroll' }
                       ].map((s) => (
                         <button
                           key={s.id}
@@ -1490,7 +1409,7 @@ export default function ERPSolutions() {
 
                     <div className='space-y-3 mb-8'>
                       {[
-                        'Choose exact industry profile (School, Finance, Clinic, Workshop, Travel)',
+                        'Choose exact industry profile (Real Estate, Education, Inventory, CRM, HRMS)',
                         'Real-time module selection and transparent license fee calculator',
                         'Direct integration with our Mohali engineering deployment queue',
                         'Free architecture walkthrough and preview instance setup'
@@ -1534,7 +1453,7 @@ export default function ERPSolutions() {
                     {/* Direct Contact Pills */}
                     <div className='grid sm:grid-cols-2 gap-3 mb-6'>
                       <a
-                        href='tel:+919781820044'
+                        href='tel:+918288029916'
                         className='p-3.5 rounded-xl bg-slate-50 hover:bg-slate-100 border border-slate-200 transition flex items-center gap-3'
                       >
                         <div className='w-9 h-9 rounded-lg bg-orange-100 text-orange-600 flex items-center justify-center flex-shrink-0'>
@@ -1542,7 +1461,7 @@ export default function ERPSolutions() {
                         </div>
                         <div className='overflow-hidden'>
                           <div className='text-[10px] uppercase text-slate-500 font-bold'>Call ERP Team</div>
-                          <div className='text-xs sm:text-sm font-bold text-blue-950 truncate'>+91 97818 20044</div>
+                          <div className='text-xs sm:text-sm font-bold text-blue-950 truncate'>+91 82880 29916</div>
                         </div>
                       </a>
 
@@ -1625,12 +1544,11 @@ export default function ERPSolutions() {
                             onChange={handleInquiryChange}
                             className='w-full px-3.5 py-2.5 rounded-lg bg-slate-50 border border-slate-200 text-slate-700 text-xs focus:outline-none focus:border-orange-500'
                           >
+                            <option value='Real Estate ERP (REMS)'>Real Estate ERP (REMS)</option>
                             <option value='School / College ERP (SMS)'>School / College ERP (SMS)</option>
-                            <option value='Credit Society ERP (CSMS)'>Credit Society ERP (CSMS)</option>
-                            <option value='Clinic & Hospital ERP (CMS)'>Clinic & Hospital ERP (CMS)</option>
-                            <option value='Vehicle Workshop ERP (VWMS)'>Vehicle Workshop ERP (VWMS)</option>
-                            <option value='Tours & Travels ERP (TTSME)'>Tours & Travels ERP (TTSME)</option>
-                            <option value='Custom Enterprise ERP'>Custom Enterprise ERP</option>
+                            <option value='Inventory & Warehouse ERP (WMS)'>Inventory & Warehouse ERP (WMS)</option>
+                            <option value='Enterprise Sales CRM'>Enterprise Sales CRM</option>
+                            <option value='HRMS & Biometric Payroll ERP'>HRMS & Biometric Payroll ERP</option>
                           </select>
                           <input
                             type='text'
@@ -1658,7 +1576,7 @@ export default function ERPSolutions() {
 
                   <div className='pt-4 border-t border-slate-100 mt-4 text-center text-xs text-slate-500 flex items-center justify-center gap-1.5'>
                     <MapPin size={13} className='text-orange-500' />
-                    <span>Pisoft Informatics • IT Park / Industrial Area, Mohali, Punjab</span>
+                    <span>Pisoft Informatics • F-468, Industrial Focal Point, Phase 8-B, S.A.S. Nagar, Mohali, Punjab, 140307, India</span>
                   </div>
                 </div>
               </div>
@@ -1737,7 +1655,7 @@ export default function ERPSolutions() {
                       <span className='w-2 h-2 rounded-full bg-orange-500 animate-ping' />
                       <span>Ready to Deploy Your ERP?</span>
                     </div>
-                    <div className='text-xs text-slate-500 truncate'>Call: +91 97818 20044</div>
+                    <div className='text-xs text-slate-500 truncate'>Call: +91 82880 29916</div>
                   </div>
                   <button
                     onClick={() => navigate('/clientRegister')}

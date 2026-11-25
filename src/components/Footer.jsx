@@ -68,7 +68,7 @@ const Footer = () => {
           <ul className="grid grid-cols-2 gap-y-2.5 gap-x-7 lg:gap-x-0 text-white text-base sm:text-[1.05rem] w-full">
             <li className="text-right lg:text-left"><Link to="/" className="hover:text-orange-400 transition">Home</Link></li>
             <li className="text-left"><Link to="/about" className="hover:text-orange-400 transition">About Us</Link></li>
-            <li className="text-right lg:text-left"><Link to="/ERPservices/Education" className="hover:text-orange-400 transition">ERP Services</Link></li>
+            <li className="text-right lg:text-left"><Link to="/ERPSolutions" className="hover:text-orange-400 transition">ERP Services</Link></li>
             <li className="text-left"><Link to="/WebApplications" className="hover:text-orange-400 transition">More Services</Link></li>
             <li className="text-right lg:text-left"><Link to="/ourGallery" className="hover:text-orange-400 transition">Gallery</Link></li>
             <li className="text-right lg:text-left"><Link to="/free-training" className="hover:text-orange-400 transition">Free Training</Link></li>

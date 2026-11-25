@@ -23,14 +23,6 @@ export function NavbarDemo() {
     {
       name: "ERP Services",
       link: "/ERPSolutions",
-      children: [
-        { name: "All ERP Solutions", link: "/ERPSolutions" },
-        { name: "School Mgmt. System", link: "/ERPservices/Education" },
-        { name: "Credit Society Mgmt. System", link: "/ERPservices/Finance" },
-        { name: "Clinic Mgmt. System", link: "/ERPservices/Medical&Healthcare" },
-        { name: "Vehicle Workshop Mgmt. System", link: "/ERPservices/AutoMobile" },
-        { name: "Tours & Travels", link: "/ERPservices/TourTravels" },
-      ],
     },
     {
       name: "Our Services",

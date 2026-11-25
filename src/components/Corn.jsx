@@ -200,56 +200,14 @@ export function Example() {
               </Link>
             </Accordion>
 
-            <Accordion className="cursor-pointer hover:text-blue-400 py-1" title="ERP Solutions">
-              <Link
-                to="/ERPSolutions"
-                onClick={() => setActive(false)}
-                onMouseEnter={() => setBgImage(imageMap.about)}
-                className="block cursor-pointer font-bold text-orange-400 hover:text-orange-300 py-1"
-              >
-                All ERP Solutions
-              </Link>
-              <Link
-                to="/ERPservices/Education"
-                onClick={() => setActive(false)}
-                onMouseEnter={() => setBgImage(imageMap.about)}
-                className="block cursor-pointer hover:text-blue-400 py-1"
-              >
-                Education
-              </Link>
-              <Link
-                to="/ERPservices/Finance"
-                onClick={() => setActive(false)}
-                onMouseEnter={() => setBgImage(imageMap.about)}
-                className="block cursor-pointer hover:text-blue-400 py-1"
-              >
-                Finance
-              </Link>
-              <Link
-                to="/ERPservices/Medical&Healthcare"
-                onClick={() => setActive(false)}
-                onMouseEnter={() => setBgImage(imageMap.about)}
-                className="block cursor-pointer hover:text-blue-400 py-1"
-              >
-                Medical & Healthcare
-              </Link>
-              <Link
-                to="/ERPservices/AutoMobile"
-                onClick={() => setActive(false)}
-                onMouseEnter={() => setBgImage(imageMap.about)}
-                className="block cursor-pointer hover:text-blue-400 py-1"
-              >
-                AutoMobile
-              </Link>
-              <Link
-                to="/ERPservices/TourTravels"
-                onClick={() => setActive(false)}
-                onMouseEnter={() => setBgImage(imageMap.about)}
-                className="block cursor-pointer hover:text-blue-400 py-1"
-              >
-                Tour & Travels
-              </Link>
-            </Accordion>
+            <Link
+              to="/ERPSolutions"
+              onClick={() => setActive(false)}
+              onMouseEnter={() => setBgImage(imageMap.about)}
+              className="hover:text-blue-400 transition block py-1"
+            >
+              ERP Services
+            </Link>
 
             <Accordion className="cursor-pointer hover:text-blue-400 py-1" title="Other Services">
               <Link

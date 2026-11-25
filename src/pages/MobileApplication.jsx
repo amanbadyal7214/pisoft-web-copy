@@ -119,7 +119,7 @@ export default function MobileApplication() {
           message: ''
         })
       } else {
-        setFormError('Could not send message automatically. Please reach our engineering leads directly at +91 97818 20044.')
+        setFormError('Could not send message automatically. Please reach our engineering leads directly at +91 82880 29916.')
       }
     } catch (err) {
       console.error(err)
@@ -310,7 +310,7 @@ export default function MobileApplication() {
                 playsInline
                 preload='auto'
                 poster='/MobileApplication.webp'
-                className='w-full h-full object-cover object-center scale-105 opacity-80 filter contrast-[1.06] brightness-[1.02]'
+                className='w-full h-full object-cover object-center scale-105 opacity-95 filter contrast-[1.08] brightness-[1.01]'
               >
                 <source
                   src='https://firebasestorage.googleapis.com/v0/b/carrier-lief.firebasestorage.app/o/bannerVideo%2Fp2.mp4?alt=media&token=ef681c2f-bf7a-4f77-8ab3-ae9f1554e20e'
@@ -319,12 +319,12 @@ export default function MobileApplication() {
               </video>
 
               {/* Translucent Frosted Glass Overlay (Video is clearly visible underneath) */}
-              <div className='absolute inset-0 bg-gradient-to-b from-white/78 via-white/60 to-white/82 backdrop-blur-[1.5px]' />
-              <div className='absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-orange-100/35 via-transparent to-transparent pointer-events-none' />
+              <div className='absolute inset-0 bg-gradient-to-b from-white/55 via-white/38 to-white/60 backdrop-blur-[0.5px]' />
+              <div className='absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-orange-100/25 via-transparent to-transparent pointer-events-none' />
 
               {/* Subtle Tech Hex/Grid Pattern */}
               <div
-                className='absolute inset-0 opacity-15 pointer-events-none'
+                className='absolute inset-0 opacity-10 pointer-events-none'
                 style={{
                   backgroundImage: `radial-gradient(rgba(15, 23, 42, 0.2) 1px, transparent 0)`,
                   backgroundSize: '24px 24px'
@@ -389,11 +389,11 @@ export default function MobileApplication() {
                 </a>
 
                 <a
-                  href='tel:+919781820044'
+                  href='tel:+918288029916'
                   className='w-full sm:w-auto px-7 py-3.5 rounded-xl bg-white/95 hover:bg-white text-[#182b67] border border-slate-200/90 font-bold text-xs sm:text-sm uppercase tracking-wider transition flex items-center justify-center gap-2.5 shadow-sm'
                 >
                   <PhoneCall size={15} className='text-orange-500' />
-                  <span>Call Architects: +91 97818 20044</span>
+                  <span>Call Architects: +91 82880 29916</span>
                 </a>
               </motion.div>
 
@@ -788,8 +788,8 @@ export default function MobileApplication() {
                         </div>
                         <div>
                           <div className='text-[11px] text-blue-200/70 uppercase tracking-wider'>Direct Engineering Line</div>
-                          <a href='tel:+919781820044' className='text-sm sm:text-base font-bold text-white hover:text-orange-400 transition'>
-                            +91 97818 20044
+                          <a href='tel:+918288029916' className='text-sm sm:text-base font-bold text-white hover:text-orange-400 transition'>
+                            +91 82880 29916
                           </a>
                         </div>
                       </div>
@@ -814,8 +814,8 @@ export default function MobileApplication() {
                           <div className='text-[11px] text-blue-200/70 uppercase tracking-wider'>Development Center</div>
                           <div className='text-xs sm:text-sm text-blue-100/80 leading-snug'>
                             Pisoft Informatics Pvt. Ltd.<br />
-                            Plot C-127, Phase 8, Industrial Area,<br />
-                            Mohali, Punjab 160071, India
+                            F-468, Industrial Focal Point, Phase 8-B,<br />
+                            S.A.S. Nagar, Mohali, Punjab, 140307, India
                           </div>
                         </div>
                       </div>
@@ -853,11 +853,11 @@ export default function MobileApplication() {
                     <h4 className='font-INB text-sm text-[#182b67] mb-1'>Need direct mobile clarification?</h4>
                     <p className='text-xs text-slate-500 mb-4'>Speak directly with our senior mobile software engineering team in Mohali.</p>
                     <a
-                      href='tel:+919781820044'
+                      href='tel:+918288029916'
                       className='w-full py-2.5 px-4 rounded-xl bg-[#182b67] hover:bg-[#101f4c] text-white font-INB text-xs uppercase tracking-wider transition flex items-center justify-center gap-2 mb-2.5 shadow-sm'
                     >
                       <PhoneCall size={14} />
-                      <span>+91 97818 20044</span>
+                      <span>+91 82880 29916</span>
                     </a>
                     <a
                       href='#project-consultation'
