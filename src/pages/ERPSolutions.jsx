@@ -243,8 +243,8 @@ export default function ERPSolutions() {
     },
     {
       id: 'education',
-      title: 'School Management System',
-      shortTitle: 'School ERP (SMS)',
+      title: 'Education Management System ERP',
+      shortTitle: 'Education ERP (SMS)',
       code: 'SMS',
       badge: 'Education Sector ERP',
       icon: GraduationCap,
@@ -463,7 +463,7 @@ export default function ERPSolutions() {
     }
     const sectorLabels = {
       'real-estate': 'Real Estate & Properties (REMS)',
-      education: 'School & College Management (SMS)',
+      education: 'Education Management ERP (SMS)',
       inventory: 'Inventory & Warehouse Management (WMS)',
       crm: 'Enterprise Sales & Deal CRM',
       hr: 'HRMS & Biometric Payroll (HRMS)'
@@ -591,7 +591,7 @@ export default function ERPSolutions() {
           </div>
 
           {/* LIGHT THEME HERO SECTION WITH EXPANSIVE FULL-WIDTH RESPONSIVE LAYOUT */}
-          <header className='relative pt-24 sm:pt-28 md:pt-30 lg:pt-34 xl:pt-36 pb-8 sm:pb-12 bg-white overflow-hidden border-b border-slate-100 w-full'>
+          <header className='relative pt-16 sm:pt-20 md:pt-22 lg:pt-24 xl:pt-26 pb-8 sm:pb-12 bg-white overflow-hidden border-b border-slate-100 w-full'>
             <div className='w-full max-w-[1850px] mx-auto px-4 sm:px-6 md:px-8 lg:px-10 xl:px-12'>
               <div className='grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 xl:gap-12 items-center w-full min-w-0'>
                 {/* Left Column: Heading, Value Proposition & Prominent CTAs */}
@@ -685,7 +685,7 @@ export default function ERPSolutions() {
                     {[
                       { id: 'overview', label: 'Command Center', tag: 'Overview' },
                       { id: 'real-estate', label: 'Real Estate', tag: 'REMS' },
-                      { id: 'education', label: 'School ERP', tag: 'SMS' },
+                      { id: 'education', label: 'Education ERP', tag: 'SMS' },
                       { id: 'inventory', label: 'Inventory', tag: 'WMS' },
                       { id: 'crm', label: 'CRM', tag: 'CRM' },
                       { id: 'hr', label: 'HR & Payroll', tag: 'HRMS' }
@@ -786,7 +786,7 @@ export default function ERPSolutions() {
                   },
                   {
                     id: 'education',
-                    title: 'School Management',
+                    title: 'Education Management ERP',
                     badge: 'Education SMS',
                     image: '/SCHOOL.webp',
                     link: '/ERPservices/Education',
@@ -1130,7 +1130,7 @@ export default function ERPSolutions() {
                     <div className='space-y-2'>
                       {[
                         { id: 'real-estate', name: 'Real Estate & Properties (REMS)' },
-                        { id: 'education', name: 'School / College Education (SMS)' },
+                        { id: 'education', name: 'Education Management ERP (School & College)' },
                         { id: 'inventory', name: 'Inventory & Warehouse (WMS)' },
                         { id: 'crm', name: 'Enterprise Sales CRM' },
                         { id: 'hr', name: 'HRMS & Biometric Payroll' }
@@ -1545,7 +1545,7 @@ export default function ERPSolutions() {
                             className='w-full px-3.5 py-2.5 rounded-lg bg-slate-50 border border-slate-200 text-slate-700 text-xs focus:outline-none focus:border-orange-500'
                           >
                             <option value='Real Estate ERP (REMS)'>Real Estate ERP (REMS)</option>
-                            <option value='School / College ERP (SMS)'>School / College ERP (SMS)</option>
+                            <option value='Education Management ERP (School & College)'>Education Management ERP (School & College)</option>
                             <option value='Inventory & Warehouse ERP (WMS)'>Inventory & Warehouse ERP (WMS)</option>
                             <option value='Enterprise Sales CRM'>Enterprise Sales CRM</option>
                             <option value='HRMS & Biometric Payroll ERP'>HRMS & Biometric Payroll ERP</option>

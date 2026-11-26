@@ -329,7 +329,7 @@ export default function WebApplication() {
                 playsInline
                 preload='auto'
                 poster='/website-Photo.webp'
-                className='w-full h-full object-cover object-center scale-105 opacity-95 filter contrast-[1.08] brightness-[1.01]'
+                className='w-full h-full object-cover object-center scale-105 opacity-100 filter contrast-[1.12] brightness-[1.02]'
               >
                 {/* Official engineering video */}
                 <source
@@ -339,8 +339,8 @@ export default function WebApplication() {
               </video>
 
               {/* Translucent Frosted Glass Overlay (Video is clearly visible underneath) */}
-              <div className='absolute inset-0 bg-gradient-to-b from-white/55 via-white/38 to-white/60 backdrop-blur-[0.5px]' />
-              <div className='absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-orange-100/25 via-transparent to-transparent pointer-events-none' />
+              <div className='absolute inset-0 bg-gradient-to-b from-white/30 via-white/18 to-white/35' />
+              <div className='absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-orange-100/15 via-transparent to-transparent pointer-events-none' />
 
               {/* Subtle Tech Hex/Grid Pattern */}
               <div
