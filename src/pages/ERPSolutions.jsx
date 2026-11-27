@@ -591,7 +591,7 @@ export default function ERPSolutions() {
           </div>
 
           {/* LIGHT THEME HERO SECTION WITH EXPANSIVE FULL-WIDTH RESPONSIVE LAYOUT */}
-          <header className='relative pt-16 sm:pt-20 md:pt-22 lg:pt-24 xl:pt-26 pb-8 sm:pb-12 bg-white overflow-hidden border-b border-slate-100 w-full'>
+          <header className='relative pt-16 sm:pt-20 md:pt-22 lg:pt-24 xl:pt-26 pb-4 sm:pb-6 bg-white overflow-hidden border-b border-slate-100 w-full'>
             <div className='w-full max-w-[1850px] mx-auto px-4 sm:px-6 md:px-8 lg:px-10 xl:px-12'>
               <div className='grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 xl:gap-12 items-center w-full min-w-0'>
                 {/* Left Column: Heading, Value Proposition & Prominent CTAs */}
@@ -753,7 +753,7 @@ export default function ERPSolutions() {
           </header>
 
           {/* RESPONSIVE 5-INDUSTRY VISUAL IMAGE CARDS ROW */}
-          <section className='py-8 sm:py-12 bg-slate-50/70 border-b border-slate-200'>
+          <section className='py-4 sm:py-6 bg-slate-50/70 border-b border-slate-200'>
             <div className='w-full max-w-[1850px] mx-auto px-4 sm:px-6 md:px-8 lg:px-10 xl:px-12'>
               <div className='flex flex-col sm:flex-row items-center justify-between gap-3 mb-6 text-center sm:text-left'>
                 <div>
@@ -824,29 +824,34 @@ export default function ERPSolutions() {
                       const el = document.getElementById('industry-suites')
                       if (el) el.scrollIntoView({ behavior: 'smooth' })
                     }}
-                    className='group cursor-pointer rounded-2xl bg-white border border-slate-200 hover:border-orange-400 hover:shadow-xl transition-all duration-300 overflow-hidden flex flex-col'
+                    className='group cursor-pointer rounded-2xl relative overflow-hidden min-h-[260px] sm:min-h-[290px] border border-slate-200 hover:border-orange-400 hover:shadow-xl transition-all duration-300 flex flex-col justify-between p-4.5 sm:p-5'
                   >
-                    <div className='relative h-36 w-full overflow-hidden bg-slate-100'>
-                      <img
-                        src={card.image}
-                        alt={card.title}
-                        className='w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-500'
-                        loading='lazy'
-                      />
-                      <span className='absolute top-2 left-2 px-2.5 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider bg-white/90 backdrop-blur-md text-blue-950 border border-slate-200 shadow-xs'>
+                    {/* Full-Height Photographic Visual */}
+                    <img
+                      src={card.image}
+                      alt={card.title}
+                      className='absolute inset-0 w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-700'
+                      loading='lazy'
+                    />
+                    {/* Contrast Gradient Overlay */}
+                    <div className='absolute inset-0 bg-gradient-to-t from-blue-950/95 via-blue-950/50 to-black/25 pointer-events-none' />
+
+                    {/* Top Badge */}
+                    <div className='relative z-10 flex items-center justify-between'>
+                      <span className='px-2.5 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider bg-white/95 backdrop-blur-md text-blue-950 border border-white/60 shadow-xs'>
                         {card.badge}
                       </span>
                     </div>
-                    <div className='p-4 flex flex-col justify-between flex-grow'>
-                      <div>
-                        <h4 className='font-INB text-sm sm:text-base text-blue-950 group-hover:text-orange-600 transition-colors'>
-                          {card.title}
-                        </h4>
-                        <p className='text-xs text-slate-500 mt-1 leading-snug'>
-                          {card.highlight}
-                        </p>
-                      </div>
-                      <div className='mt-4 flex items-center justify-between text-xs text-blue-950 font-bold group-hover:text-orange-600 pt-2 border-t border-slate-100'>
+
+                    {/* Bottom Details */}
+                    <div className='relative z-10 mt-auto pt-6'>
+                      <h4 className='font-INB text-sm sm:text-base text-white group-hover:text-orange-400 transition-colors'>
+                        {card.title}
+                      </h4>
+                      <p className='text-xs text-slate-200 mt-1 leading-snug line-clamp-2'>
+                        {card.highlight}
+                      </p>
+                      <div className='mt-3 flex items-center justify-between text-xs text-orange-400 font-bold pt-2 border-t border-white/20'>
                         <span>Explore Suite</span>
                         <ArrowRight size={13} className='group-hover:translate-x-1 transition-transform' />
                       </div>
@@ -858,9 +863,9 @@ export default function ERPSolutions() {
           </section>
 
           {/* REALITY CHECK: WHY CHOOSE PISOFT ERP (ALL LIGHT THEME) */}
-          <section className='py-12 sm:py-16 bg-white border-b border-slate-200'>
+          <section className='py-4 sm:py-6 bg-white border-b border-slate-200'>
             <div className='w-full max-w-[1850px] mx-auto px-4 sm:px-6 md:px-8 lg:px-10 xl:px-12'>
-              <div className='max-w-4xl mb-12 text-center sm:text-left'>
+              <div className='max-w-4xl mb-5 sm:mb-6 text-center sm:text-left'>
                 <span className='text-orange-600 font-bold uppercase tracking-wider text-xs'>
                   The Practical Choice
                 </span>
@@ -872,17 +877,23 @@ export default function ERPSolutions() {
                 </p>
               </div>
 
-              <div className='grid md:grid-cols-3 gap-6 sm:gap-8'>
+              <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 sm:gap-6'>
                 {/* Card 1 */}
-                <div className='p-6 sm:p-8 rounded-2xl bg-slate-50 border border-slate-200 hover:border-slate-300 transition'>
-                  <div className='w-12 h-12 rounded-xl bg-rose-100 text-rose-600 flex items-center justify-center font-bold text-lg mb-5'>
-                    <ShieldAlert size={24} />
+                <div className='p-5 sm:p-6 rounded-2xl bg-slate-50 border border-slate-200 hover:border-slate-300 transition flex flex-col justify-between'>
+                  <div>
+                    <div className='flex items-center gap-3 sm:gap-3.5 mb-3.5'>
+                      <div className='w-11 h-11 sm:w-12 sm:h-12 rounded-xl bg-rose-100 text-rose-600 flex items-center justify-center font-bold text-lg flex-shrink-0'>
+                        <ShieldAlert size={22} />
+                      </div>
+                      <h3 className='text-base sm:text-lg font-INB text-blue-950 leading-snug'>
+                        Off-The-Shelf SaaS Is Rigid
+                      </h3>
+                    </div>
+                    <p className='text-slate-600 text-xs sm:text-sm leading-relaxed mb-4'>
+                      Global platforms enforce overseas workflows, charge recurring seat fees for every user, and demand expensive consultants for simple modifications.
+                    </p>
                   </div>
-                  <h3 className='text-lg sm:text-xl font-INB text-blue-950 mb-2'>Off-The-Shelf SaaS Is Rigid</h3>
-                  <p className='text-slate-600 text-xs sm:text-sm leading-relaxed mb-4'>
-                    Global platforms enforce overseas workflows, charge recurring seat fees for every user, and demand expensive consultants for simple modifications.
-                  </p>
-                  <ul className='space-y-2 text-xs text-slate-500'>
+                  <ul className='space-y-2 text-xs text-slate-500 pt-2 border-t border-slate-200/60'>
                     <li className='flex items-center gap-2'>
                       <span className='text-rose-500 font-bold'>✕</span> Rigid, locked forms
                     </li>
@@ -896,15 +907,21 @@ export default function ERPSolutions() {
                 </div>
 
                 {/* Card 2 */}
-                <div className='p-6 sm:p-8 rounded-2xl bg-slate-50 border border-slate-200 hover:border-slate-300 transition'>
-                  <div className='w-12 h-12 rounded-xl bg-amber-100 text-amber-700 flex items-center justify-center font-bold text-lg mb-5'>
-                    <FileSpreadsheet size={24} />
+                <div className='p-5 sm:p-6 rounded-2xl bg-slate-50 border border-slate-200 hover:border-slate-300 transition flex flex-col justify-between'>
+                  <div>
+                    <div className='flex items-center gap-3 sm:gap-3.5 mb-3.5'>
+                      <div className='w-11 h-11 sm:w-12 sm:h-12 rounded-xl bg-amber-100 text-amber-700 flex items-center justify-center font-bold text-lg flex-shrink-0'>
+                        <FileSpreadsheet size={22} />
+                      </div>
+                      <h3 className='text-base sm:text-lg font-INB text-blue-950 leading-snug'>
+                        Spreadsheets Create Silos
+                      </h3>
+                    </div>
+                    <p className='text-slate-600 text-xs sm:text-sm leading-relaxed mb-4'>
+                      Excel files and standalone desktop accounting fail as soon as you have multiple branches, cashiers, or field collection staff.
+                    </p>
                   </div>
-                  <h3 className='text-lg sm:text-xl font-INB text-blue-950 mb-2'>Spreadsheets Create Silos</h3>
-                  <p className='text-slate-600 text-xs sm:text-sm leading-relaxed mb-4'>
-                    Excel files and standalone desktop accounting fail as soon as you have multiple branches, cashiers, or field collection staff.
-                  </p>
-                  <ul className='space-y-2 text-xs text-slate-500'>
+                  <ul className='space-y-2 text-xs text-slate-500 pt-2 border-t border-slate-200/60'>
                     <li className='flex items-center gap-2'>
                       <span className='text-rose-500 font-bold'>✕</span> Accidental file overwrites
                     </li>
@@ -917,24 +934,58 @@ export default function ERPSolutions() {
                   </ul>
                 </div>
 
-                {/* Card 3: Pisoft Solution (Clean White with Orange Accent) */}
-                <div className='p-6 sm:p-8 rounded-2xl bg-orange-50/50 border-2 border-orange-300 shadow-md relative overflow-hidden'>
-                  <div className='w-12 h-12 rounded-xl bg-orange-500 text-white flex items-center justify-center font-bold text-lg mb-5'>
-                    <CheckCircle2 size={24} />
+                {/* Card 3 */}
+                <div className='p-5 sm:p-6 rounded-2xl bg-slate-50 border border-slate-200 hover:border-slate-300 transition flex flex-col justify-between'>
+                  <div>
+                    <div className='flex items-center gap-3 sm:gap-3.5 mb-3.5'>
+                      <div className='w-11 h-11 sm:w-12 sm:h-12 rounded-xl bg-blue-100 text-blue-700 flex items-center justify-center font-bold text-lg flex-shrink-0'>
+                        <Layers size={22} />
+                      </div>
+                      <h3 className='text-base sm:text-lg font-INB text-blue-950 leading-snug'>
+                        Fragmented Point Tools
+                      </h3>
+                    </div>
+                    <p className='text-slate-600 text-xs sm:text-sm leading-relaxed mb-4'>
+                      Patching together disconnected standalone software for billing, CRM, payroll, and stock causes duplicate entries and scattered data.
+                    </p>
                   </div>
-                  <h3 className='text-lg sm:text-xl font-INB text-blue-950 mb-2'>The Pisoft ERP Advantage</h3>
-                  <p className='text-slate-700 text-xs sm:text-sm leading-relaxed mb-4'>
-                    We engineer an owned, modular ERP precisely tuned to your industry rules. You choose your modules, own your data, and enjoy direct technical support from engineers in Mohali.
-                  </p>
-                  <ul className='space-y-2 text-xs text-slate-700 font-medium'>
+                  <ul className='space-y-2 text-xs text-slate-500 pt-2 border-t border-slate-200/60'>
                     <li className='flex items-center gap-2'>
-                      <Check size={14} className='text-orange-600' /> Indian statutory & GST/tax compliant
+                      <span className='text-rose-500 font-bold'>✕</span> Mismatched customer & stock data
                     </li>
                     <li className='flex items-center gap-2'>
-                      <Check size={14} className='text-orange-600' /> Modular: activate only what you use
+                      <span className='text-rose-500 font-bold'>✕</span> Compounding recurring software bills
                     </li>
                     <li className='flex items-center gap-2'>
-                      <Check size={14} className='text-orange-600' /> Direct call support from real developers
+                      <span className='text-rose-500 font-bold'>✕</span> Frustrating weekend manual audits
+                    </li>
+                  </ul>
+                </div>
+
+                {/* Card 4: Pisoft Solution (Clean White with Orange Accent) */}
+                <div className='p-5 sm:p-6 rounded-2xl bg-orange-50/50 border-2 border-orange-300 shadow-md relative overflow-hidden flex flex-col justify-between'>
+                  <div>
+                    <div className='flex items-center gap-3 sm:gap-3.5 mb-3.5'>
+                      <div className='w-11 h-11 sm:w-12 sm:h-12 rounded-xl bg-orange-500 text-white flex items-center justify-center font-bold text-lg flex-shrink-0'>
+                        <CheckCircle2 size={22} />
+                      </div>
+                      <h3 className='text-base sm:text-lg font-INB text-blue-950 leading-snug'>
+                        The Pisoft ERP Advantage
+                      </h3>
+                    </div>
+                    <p className='text-slate-700 text-xs sm:text-sm leading-relaxed mb-4'>
+                      We engineer an owned, modular ERP precisely tuned to your industry rules. You choose your modules, own your data, and enjoy direct technical support from engineers in Mohali.
+                    </p>
+                  </div>
+                  <ul className='space-y-2 text-xs text-slate-700 font-medium pt-2 border-t border-orange-200/60'>
+                    <li className='flex items-center gap-2'>
+                      <Check size={14} className='text-orange-600 flex-shrink-0' /> Indian statutory, GST & RERA compliant
+                    </li>
+                    <li className='flex items-center gap-2'>
+                      <Check size={14} className='text-orange-600 flex-shrink-0' /> Modular: activate only what you use
+                    </li>
+                    <li className='flex items-center gap-2'>
+                      <Check size={14} className='text-orange-600 flex-shrink-0' /> Direct call support from real developers
                     </li>
                   </ul>
                 </div>
@@ -943,9 +994,9 @@ export default function ERPSolutions() {
           </section>
 
           {/* INTERACTIVE INDUSTRY ERP SUITES EXPLORER (LIGHT THEME) */}
-          <section id='industry-suites' className='py-14 sm:py-20 bg-slate-50/60'>
+          <section id='industry-suites' className='py-5 sm:py-8 bg-slate-50/60'>
             <div className='w-full max-w-[1850px] mx-auto px-4 sm:px-6 md:px-8 lg:px-10 xl:px-12'>
-              <div className='text-center max-w-4xl mx-auto mb-10'>
+              <div className='text-center max-w-4xl mx-auto mb-5 sm:mb-6'>
                 <span className='text-orange-600 font-bold uppercase tracking-wider text-xs'>
                   Deep Dive Explorer
                 </span>
@@ -982,49 +1033,58 @@ export default function ERPSolutions() {
               {/* ACTIVE SUITE DISPLAY CARD (LIGHT THEME) */}
               <div className='bg-white rounded-3xl border border-slate-200 shadow-xl overflow-hidden'>
                 <div className='grid lg:grid-cols-12 gap-0'>
-                  {/* Left Column: Real Photographic Preview & Metrics */}
-                  <div className='lg:col-span-5 p-6 sm:p-8 bg-slate-50 border-b lg:border-b-0 lg:border-r border-slate-200 flex flex-col justify-between'>
-                    <div>
-                      {/* Real Image */}
-                      <div className='relative rounded-2xl overflow-hidden mb-6 aspect-video sm:aspect-auto sm:h-64 border border-slate-200 shadow-sm'>
-                        <img
-                          src={currentSuite.mainImage}
-                          alt={currentSuite.title}
-                          className='w-full h-full object-cover object-center transform hover:scale-105 transition-transform duration-700'
-                          loading='lazy'
-                        />
-                        <div className='absolute top-3 left-3 px-3 py-1 rounded-full bg-white/95 text-blue-950 text-xs font-bold border border-slate-200 shadow-xs'>
-                          {currentSuite.code} Suite
-                        </div>
-                      </div>
+                  {/* Left Column: Real Photographic Preview spanning FULL HEIGHT edge-to-edge */}
+                  <div className='lg:col-span-5 relative overflow-hidden min-h-[440px] sm:min-h-[500px] lg:min-h-full flex flex-col justify-between p-5 sm:p-7 border-b lg:border-b-0 lg:border-r border-slate-200'>
+                    {/* Full-Height Photographic Visual */}
+                    <img
+                      src={currentSuite.mainImage}
+                      alt={currentSuite.title}
+                      className='absolute inset-0 w-full h-full object-cover object-center transform hover:scale-105 transition-transform duration-700'
+                      loading='lazy'
+                    />
+                    {/* Deep aesthetic gradient overlay to ensure crystal-clear text readability over image */}
+                    <div className='absolute inset-0 bg-gradient-to-t from-blue-950/95 via-blue-950/40 to-slate-900/30 pointer-events-none' />
 
+                    {/* Top Tag */}
+                    <div className='relative z-10 flex items-center justify-between'>
+                      <div className='px-3.5 py-1.5 rounded-full bg-white/95 backdrop-blur-md text-blue-950 text-xs font-bold border border-white/60 shadow-md'>
+                        {currentSuite.code} Suite
+                      </div>
+                      <span className='px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider bg-orange-500/90 backdrop-blur-md text-white shadow-xs'>
+                        Live System
+                      </span>
+                    </div>
+
+                    {/* Bottom Floating Cards: Metrics & Sub-module */}
+                    <div className='relative z-10 space-y-3 mt-auto pt-20'>
                       {/* Operational Metrics */}
-                      <div className='mb-6'>
-                        <div className='text-xs uppercase tracking-wider text-orange-600 font-bold mb-3'>
-                          Operational Impact Metrics
+                      <div>
+                        <div className='text-[11px] uppercase tracking-wider text-orange-400 font-bold mb-2 flex items-center gap-1.5'>
+                          <span className='w-1.5 h-1.5 rounded-full bg-orange-400 animate-pulse' />
+                          <span>Operational Impact Metrics</span>
                         </div>
                         <div className='grid grid-cols-3 gap-2 text-center'>
                           {currentSuite.metrics.map((m, idx) => (
-                            <div key={idx} className='p-2.5 rounded-xl bg-white border border-slate-200 shadow-2xs'>
+                            <div key={idx} className='p-2.5 rounded-xl bg-white/95 backdrop-blur-md border border-white/40 shadow-md'>
                               <div className='text-sm sm:text-base font-INB text-blue-950'>{m.value}</div>
-                              <div className='text-[10px] text-slate-500 mt-0.5 leading-tight'>{m.label}</div>
+                              <div className='text-[10px] text-slate-600 mt-0.5 leading-tight'>{m.label}</div>
                             </div>
                           ))}
                         </div>
                       </div>
-                    </div>
 
-                    {/* Sub-module thumbnail card */}
-                    <div className='p-3 rounded-xl bg-white border border-slate-200 flex items-center gap-3 shadow-2xs'>
-                      <img
-                        src={currentSuite.subImage}
-                        alt='Module preview'
-                        className='w-12 h-12 rounded-lg object-cover border border-slate-200 flex-shrink-0'
-                        loading='lazy'
-                      />
-                      <div className='text-xs'>
-                        <div className='font-bold text-blue-950'>{currentSuite.subImageLabel}</div>
-                        <div className='text-slate-500 text-[11px]'>Integrated module & reporting engine</div>
+                      {/* Sub-module thumbnail card */}
+                      <div className='p-2.5 sm:p-3 rounded-xl bg-white/95 backdrop-blur-md border border-white/40 flex items-center gap-3 shadow-md'>
+                        <img
+                          src={currentSuite.subImage}
+                          alt='Module preview'
+                          className='w-11 h-11 rounded-lg object-cover border border-slate-200 flex-shrink-0'
+                          loading='lazy'
+                        />
+                        <div className='text-xs'>
+                          <div className='font-bold text-blue-950'>{currentSuite.subImageLabel}</div>
+                          <div className='text-slate-600 text-[11px]'>Integrated module & reporting engine</div>
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -1106,9 +1166,9 @@ export default function ERPSolutions() {
           </section>
 
           {/* INTERACTIVE ERP SCOPE ESTIMATOR (ALL LIGHT THEME) */}
-          <section className='py-14 sm:py-20 bg-white border-b border-slate-200'>
+          <section className='py-5 sm:py-8 bg-white border-b border-slate-200'>
             <div className='w-full max-w-[1850px] mx-auto px-4 sm:px-6 md:px-8 lg:px-10 xl:px-12'>
-              <div className='max-w-4xl mx-auto text-center mb-10'>
+              <div className='max-w-4xl mx-auto text-center mb-5 sm:mb-6'>
                 <span className='text-orange-600 font-bold uppercase tracking-wider text-xs'>
                   Interactive Architecture Planner
                 </span>
@@ -1190,34 +1250,34 @@ export default function ERPSolutions() {
                     <div className='space-y-3'>
                       <button
                         onClick={() => setCfgDeployment('cloud')}
-                        className={`w-full text-left p-3.5 rounded-xl text-xs transition cursor-pointer border ${
+                        className={`w-full text-left p-3.5 rounded-xl text-xs transition cursor-pointer ${
                           cfgDeployment === 'cloud'
-                            ? 'bg-white border-2 border-orange-500 shadow-xs'
-                            : 'bg-white border-slate-200 text-slate-700 hover:bg-slate-100'
+                            ? 'bg-orange-500 text-white font-bold shadow-xs'
+                            : 'bg-white border border-slate-200 text-slate-700 hover:bg-slate-100'
                         }`}
                       >
-                        <div className='font-bold text-blue-950 flex items-center justify-between'>
+                        <div className='font-bold flex items-center justify-between'>
                           <span>Managed Cloud (99.9% SLA)</span>
-                          {cfgDeployment === 'cloud' && <Check size={14} className='text-orange-500' />}
+                          {cfgDeployment === 'cloud' && <Check size={14} className='text-white' />}
                         </div>
-                        <p className='text-slate-500 text-[11px] mt-1'>
+                        <p className={`text-[11px] mt-1 ${cfgDeployment === 'cloud' ? 'text-white/80' : 'text-slate-500'}`}>
                           Automated daily backups, SSL encryption, zero local hardware maintenance.
                         </p>
                       </button>
 
                       <button
                         onClick={() => setCfgDeployment('onprem')}
-                        className={`w-full text-left p-3.5 rounded-xl text-xs transition cursor-pointer border ${
+                        className={`w-full text-left p-3.5 rounded-xl text-xs transition cursor-pointer ${
                           cfgDeployment === 'onprem'
-                            ? 'bg-white border-2 border-orange-500 shadow-xs'
-                            : 'bg-white border-slate-200 text-slate-700 hover:bg-slate-100'
+                            ? 'bg-orange-500 text-white font-bold shadow-xs'
+                            : 'bg-white border border-slate-200 text-slate-700 hover:bg-slate-100'
                         }`}
                       >
-                        <div className='font-bold text-blue-950 flex items-center justify-between'>
+                        <div className='font-bold flex items-center justify-between'>
                           <span>On-Premises Local Server</span>
-                          {cfgDeployment === 'onprem' && <Check size={14} className='text-orange-500' />}
+                          {cfgDeployment === 'onprem' && <Check size={14} className='text-white' />}
                         </div>
-                        <p className='text-slate-500 text-[11px] mt-1'>
+                        <p className={`text-[11px] mt-1 ${cfgDeployment === 'onprem' ? 'text-white/80' : 'text-slate-500'}`}>
                           Installed on your local office server for private air-gapped data retention.
                         </p>
                       </button>
@@ -1253,9 +1313,9 @@ export default function ERPSolutions() {
           </section>
 
           {/* CROSS-PLATFORM ARCHITECTURAL CAPABILITIES (LIGHT THEME) */}
-          <section className='py-14 sm:py-20 bg-slate-50/70 border-b border-slate-200'>
+          <section className='py-5 sm:py-8 bg-slate-50/70 border-b border-slate-200'>
             <div className='w-full max-w-[1850px] mx-auto px-4 sm:px-6 md:px-8 lg:px-10 xl:px-12'>
-              <div className='max-w-4xl mb-12 text-center sm:text-left'>
+              <div className='max-w-4xl mb-5 sm:mb-6 text-center sm:text-left'>
                 <span className='text-orange-600 font-bold uppercase tracking-wider text-xs'>
                   Architectural Foundation
                 </span>
@@ -1304,12 +1364,14 @@ export default function ERPSolutions() {
                   return (
                     <div
                       key={i}
-                      className='p-6 rounded-2xl bg-white border border-slate-200 hover:border-orange-400 hover:shadow-lg transition-all duration-300'
+                      className='p-5 sm:p-6 rounded-2xl bg-white border border-slate-200 hover:border-orange-400 hover:shadow-lg transition-all duration-300'
                     >
-                      <div className='w-11 h-11 rounded-xl bg-orange-100 text-orange-600 flex items-center justify-center mb-4'>
-                        <Icon size={20} />
+                      <div className='flex items-center gap-3.5 mb-3'>
+                        <div className='w-11 h-11 rounded-xl bg-orange-100 text-orange-600 flex items-center justify-center flex-shrink-0'>
+                          <Icon size={20} />
+                        </div>
+                        <h3 className='text-base font-INB text-blue-950 leading-snug'>{cap.title}</h3>
                       </div>
-                      <h3 className='text-base font-INB text-blue-950 mb-1.5'>{cap.title}</h3>
                       <p className='text-slate-600 text-xs sm:text-sm leading-relaxed'>{cap.desc}</p>
                     </div>
                   )
@@ -1319,9 +1381,9 @@ export default function ERPSolutions() {
           </section>
 
           {/* 4-STAGE ROADMAP (LIGHT THEME) */}
-          <section className='py-14 sm:py-20 bg-white border-b border-slate-200'>
+          <section className='py-5 sm:py-8 bg-white border-b border-slate-200'>
             <div className='w-full max-w-[1850px] mx-auto px-4 sm:px-6 md:px-8 lg:px-10 xl:px-12'>
-              <div className='text-center max-w-4xl mx-auto mb-12'>
+              <div className='text-center max-w-4xl mx-auto mb-5 sm:mb-6'>
                 <span className='text-orange-600 font-bold uppercase tracking-wider text-xs'>
                   Transparent Execution
                 </span>
@@ -1372,9 +1434,9 @@ export default function ERPSolutions() {
           </section>
 
           {/* DEDICATED "CONTACT US FOR OUR ERP SERVICES" (ALL LIGHT THEME) */}
-          <section id='contact-erp' className='py-16 sm:py-24 bg-gradient-to-b from-slate-50 via-white to-orange-50/30 border-b border-slate-200'>
+          <section id='contact-erp' className='py-6 sm:py-8 bg-gradient-to-b from-slate-50 via-white to-orange-50/30 border-b border-slate-200'>
             <div className='w-full max-w-[1850px] mx-auto px-4 sm:px-6 md:px-8 lg:px-10 xl:px-12'>
-              <div className='text-center max-w-4xl mx-auto mb-14'>
+              <div className='text-center max-w-4xl mx-auto mb-5 sm:mb-6'>
                 <span className='inline-block px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-wider bg-orange-100 text-orange-700 mb-3'>
                   Get Started With Pisoft ERP
                 </span>
@@ -1396,13 +1458,14 @@ export default function ERPSolutions() {
                   </div>
 
                   <div>
-                    <div className='w-12 h-12 rounded-2xl bg-orange-100 text-orange-600 flex items-center justify-center mb-5'>
-                      <Building2 size={26} />
+                    <div className='flex items-center gap-4 mb-4'>
+                      <div className='w-12 h-12 rounded-2xl bg-orange-100 text-orange-600 flex items-center justify-center flex-shrink-0'>
+                        <Building2 size={26} />
+                      </div>
+                      <h3 className='text-xl sm:text-2xl font-INB text-blue-950 leading-snug'>
+                        Client Registration & Onboarding Portal
+                      </h3>
                     </div>
-
-                    <h3 className='text-xl sm:text-2xl font-INB text-blue-950 mb-2'>
-                      Client Registration & Onboarding Portal
-                    </h3>
                     <p className='text-slate-600 text-xs sm:text-sm leading-relaxed mb-6'>
                       Configure your system in minutes. Access our dedicated client registration gateway to choose your business profile, pick mandatory and optional modules, view pricing, and submit your enterprise parameters.
                     </p>
@@ -1439,13 +1502,14 @@ export default function ERPSolutions() {
                 {/* CARD 2: DIRECT CONSULTATION DESK */}
                 <div className='lg:col-span-6 rounded-3xl p-6 sm:p-10 bg-white border border-slate-200 shadow-md flex flex-col justify-between'>
                   <div>
-                    <div className='w-12 h-12 rounded-2xl bg-blue-100 text-blue-950 flex items-center justify-center mb-5'>
-                      <Headphones size={26} />
+                    <div className='flex items-center gap-4 mb-4'>
+                      <div className='w-12 h-12 rounded-2xl bg-blue-100 text-blue-950 flex items-center justify-center flex-shrink-0'>
+                        <Headphones size={26} />
+                      </div>
+                      <h3 className='text-xl sm:text-2xl font-INB text-blue-950 leading-snug'>
+                        Direct Architecture Consultation Desk
+                      </h3>
                     </div>
-
-                    <h3 className='text-xl sm:text-2xl font-INB text-blue-950 mb-2'>
-                      Direct Architecture Consultation Desk
-                    </h3>
                     <p className='text-slate-600 text-xs sm:text-sm leading-relaxed mb-6'>
                       Prefer to speak directly with an enterprise ERP architect before registering? Call us, email our office in Mohali, or submit a callback request below.
                     </p>
@@ -1584,9 +1648,9 @@ export default function ERPSolutions() {
           </section>
 
           {/* FREQUENTLY ASKED QUESTIONS (LIGHT THEME) */}
-          <section className='py-14 sm:py-20 bg-white'>
+          <section className='py-5 sm:py-8 bg-white'>
             <div className='w-full max-w-5xl mx-auto px-4 sm:px-6 md:px-8 lg:px-10'>
-              <div className='text-center mb-10'>
+              <div className='text-center mb-5 sm:mb-6'>
                 <span className='text-orange-600 font-bold uppercase tracking-wider text-xs'>
                   Clear Answers
                 </span>
