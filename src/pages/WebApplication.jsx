@@ -318,7 +318,7 @@ export default function WebApplication() {
                  - Clean, official, enterprise IT agency feel in light theme
                  - Navbar clearance: pt-32 sm:pt-36 lg:pt-40 xl:pt-44
              ========================================================================= */}
-          <header className='relative min-h-[75vh] lg:min-h-[82vh] w-full flex items-center justify-center overflow-hidden bg-white pt-32 sm:pt-36 lg:pt-40 xl:pt-44 pb-16 sm:pb-20 border-b border-slate-200/80'>
+          <header className='relative min-h-[75vh] lg:min-h-[82vh] w-full flex items-center justify-center overflow-hidden bg-white pt-20 sm:pt-24 lg:pt-28 xl:pt-30 pb-8 sm:pb-10 border-b border-slate-200/80'>
             
             {/* Background Development Video with Luminous Translucent White Overlay */}
             <div className='absolute inset-0 w-full h-full overflow-hidden z-0'>
@@ -448,11 +448,11 @@ export default function WebApplication() {
           {/* =========================================================================
               2. THE 4 CORE TECHNOLOGY PILLARS (DEEP DIVE MATRIX)
              ========================================================================= */}
-          <section id='tech-stacks' className='py-14 sm:py-20 bg-gradient-to-b from-[#182b67]/5 via-slate-50/60 to-white border-b border-slate-200'>
+          <section id='tech-stacks' className='py-5 sm:py-8 bg-gradient-to-b from-[#182b67]/5 via-slate-50/60 to-white border-b border-slate-200'>
             <div className='w-full max-w-[1850px] mx-auto px-4 sm:px-6 md:px-8 lg:px-10 xl:px-12'>
-              <div className='flex flex-col md:flex-row md:items-end justify-between gap-4 mb-10 sm:mb-12'>
+              <div className='flex flex-col md:flex-row md:items-end justify-between gap-4 mb-5 sm:mb-6'>
                 <div className='max-w-3xl'>
-                  <span className='text-[#182b67] font-bold uppercase tracking-wider text-xs'>
+                  <span className='text-orange-600 font-bold uppercase tracking-wider text-xs'>
                     Core Engineering Stacks
                   </span>
                   <h2 className='text-2xl sm:text-3xl md:text-4xl font-INB text-[#182b67] mt-1'>
@@ -465,7 +465,7 @@ export default function WebApplication() {
 
                 <a
                   href='#project-consultation'
-                  className='hidden md:inline-flex items-center gap-1.5 text-xs font-bold text-[#182b67] hover:text-orange-500 transition'
+                  className='hidden md:inline-flex items-center gap-1.5 text-xs font-bold text-orange-600 hover:text-orange-700 transition'
                 >
                   <span>Request Stack Recommendation</span>
                   <ArrowRight size={14} />
@@ -479,27 +479,28 @@ export default function WebApplication() {
                   return (
                     <div
                       key={pillar.id}
-                      className='p-6 rounded-2xl sm:rounded-3xl bg-white border border-[#182b67]/15 hover:border-[#182b67] shadow-sm hover:shadow-xl hover:shadow-[#182b67]/15 transition-all duration-300 flex flex-col justify-between group relative overflow-hidden'
+                      className='p-5 sm:p-6 rounded-2xl sm:rounded-3xl bg-white border border-slate-200 hover:border-orange-400 shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col justify-between group relative overflow-hidden'
                     >
-                      {/* Top Brand Blue Accent Bar: rgb(24, 43, 103) */}
-                      <div className='absolute top-0 left-0 right-0 h-1.5 bg-[#182b67]'></div>
+                      {/* Top Brand Orange Accent Bar */}
+                      <div className='absolute top-0 left-0 right-0 h-1.5 bg-orange-500'></div>
 
                       <div>
-                        {/* Top Badge & Icon */}
-                        <div className='flex items-center justify-between gap-2 mb-4 pt-1'>
-                          <div className='w-12 h-12 rounded-2xl bg-[#182b67]/10 text-[#182b67] border border-[#182b67]/20 flex items-center justify-center group-hover:scale-105 transition-transform'>
-                            <Icon size={24} />
+                        {/* Top Badge & Icon with Title Side-by-Side */}
+                        <div className='flex items-center justify-between gap-2 mb-3 pt-1'>
+                          <div className='flex items-center gap-3'>
+                            <div className='w-11 h-11 rounded-xl bg-orange-100 text-orange-600 flex items-center justify-center flex-shrink-0 group-hover:scale-105 transition-transform'>
+                              <Icon size={22} />
+                            </div>
+                            <h3 className='font-INB text-base sm:text-lg text-[#182b67] leading-snug'>
+                              {pillar.title}
+                            </h3>
                           </div>
-                          <span className='px-2.5 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider bg-[#182b67]/10 border border-[#182b67]/20 text-[#182b67] font-mono'>
+                          <span className='px-2.5 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider bg-orange-50 border border-orange-200 text-orange-700 font-mono flex-shrink-0'>
                             {pillar.badge}
                           </span>
                         </div>
 
-                        {/* Title & Tagline */}
-                        <h3 className='font-INB text-lg sm:text-xl text-[#182b67] mb-1'>
-                          {pillar.title}
-                        </h3>
-                        <p className='text-[#182b67]/80 text-xs font-semibold mb-3'>
+                        <p className='text-orange-600/90 text-xs font-semibold mb-3'>
                           {pillar.tagline}
                         </p>
 
@@ -520,9 +521,9 @@ export default function WebApplication() {
                         {/* 3 Metric Pills */}
                         <div className='grid grid-cols-3 gap-1.5 py-3 border-y border-slate-200 text-center mb-5'>
                           {pillar.metrics.map((m, idx) => (
-                            <div key={idx} className='p-2 rounded-xl bg-[#182b67]/5 border border-[#182b67]/15'>
+                            <div key={idx} className='p-2 rounded-xl bg-slate-50 border border-slate-200'>
                               <div className='font-INB text-xs text-[#182b67]'>{m.val}</div>
-                              <div className='text-[9px] text-[#182b67]/70 leading-tight mt-0.5'>{m.label}</div>
+                              <div className='text-[9px] text-slate-500 leading-tight mt-0.5'>{m.label}</div>
                             </div>
                           ))}
                         </div>
@@ -530,7 +531,7 @@ export default function WebApplication() {
 
                       <a
                         href='#project-consultation'
-                        className='w-full py-2.5 px-4 rounded-xl bg-[#182b67] hover:bg-[#101f4c] text-white font-INB text-xs uppercase tracking-wider border border-[#182b67] transition-colors flex items-center justify-center gap-1.5 shadow-md shadow-[#182b67]/20'
+                        className='w-full py-2.5 px-4 rounded-xl bg-orange-500 hover:bg-orange-600 text-white font-INB text-xs uppercase tracking-wider transition-colors flex items-center justify-center gap-1.5 shadow-md shadow-orange-500/20'
                       >
                         <span>Build with {pillar.badge}</span>
                         <ArrowRight size={13} className='text-white/80' />
@@ -545,14 +546,14 @@ export default function WebApplication() {
           {/* =========================================================================
               3. ENGINEERING RIGOR & GUARANTEES (THE 4 TRUST PILLARS) - SIGNATURE BLUE BAND
              ========================================================================= */}
-          <section className='py-16 sm:py-24 bg-gradient-to-br from-[#182b67] via-[#101e4a] to-[#0c1636] text-white border-y border-[#182b67]/60 relative overflow-hidden'>
+          <section className='py-6 sm:py-8 bg-gradient-to-br from-[#182b67] via-[#101e4a] to-[#0c1636] text-white border-y border-[#182b67]/60 relative overflow-hidden'>
             {/* Ambient corporate blue glow: rgb(24, 43, 103) */}
             <div className='absolute -top-32 -left-32 w-96 h-96 bg-[#182b67]/60 rounded-full blur-3xl pointer-events-none' />
             <div className='absolute -bottom-32 -right-32 w-96 h-96 bg-[#182b67]/40 rounded-full blur-3xl pointer-events-none' />
 
             <div className='relative z-10 w-full max-w-[1850px] mx-auto px-4 sm:px-6 md:px-8 lg:px-10 xl:px-12'>
-              <div className='max-w-4xl mb-10 sm:mb-12 text-center sm:text-left'>
-                <span className='px-3.5 py-1 rounded-full bg-white/15 text-white border border-white/25 text-xs font-bold uppercase tracking-wider inline-block mb-3'>
+              <div className='max-w-4xl mb-5 sm:mb-6 text-center sm:text-left'>
+                <span className='px-3.5 py-1 rounded-full bg-orange-500/20 text-orange-300 border border-orange-400/30 text-xs font-bold uppercase tracking-wider inline-block mb-3'>
                   Engineering Guarantees
                 </span>
                 <h2 className='text-2xl sm:text-3xl md:text-4xl font-INB text-white mt-1'>
@@ -564,41 +565,49 @@ export default function WebApplication() {
               </div>
 
               <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6'>
-                <div className='p-6 rounded-2xl bg-white/[0.08] backdrop-blur-md border border-white/15 hover:border-white/40 hover:bg-white/[0.12] transition-all duration-300 shadow-xl'>
-                  <div className='w-12 h-12 rounded-xl bg-white/15 text-white border border-white/25 flex items-center justify-center font-bold mb-4 shadow-sm'>
-                    <Lock size={22} />
+                <div className='p-5 sm:p-6 rounded-2xl bg-white/[0.08] backdrop-blur-md border border-white/15 hover:border-orange-400/50 hover:bg-white/[0.12] transition-all duration-300 shadow-xl'>
+                  <div className='flex items-center gap-3.5 mb-3'>
+                    <div className='w-11 h-11 rounded-xl bg-orange-500/20 text-orange-400 border border-orange-400/30 flex items-center justify-center font-bold shadow-sm flex-shrink-0'>
+                      <Lock size={20} />
+                    </div>
+                    <h3 className='font-INB text-base sm:text-lg text-white leading-snug'>100% IP Handover</h3>
                   </div>
-                  <h3 className='font-INB text-lg text-white mb-1.5'>100% IP Handover</h3>
                   <p className='text-xs sm:text-sm text-blue-100/75 leading-relaxed'>
                     Complete ownership of all Git repositories, Docker containers, database schemas, and documentation. Zero proprietary royalties.
                   </p>
                 </div>
 
-                <div className='p-6 rounded-2xl bg-white/[0.08] backdrop-blur-md border border-white/15 hover:border-white/40 hover:bg-white/[0.12] transition-all duration-300 shadow-xl'>
-                  <div className='w-12 h-12 rounded-xl bg-white/15 text-white border border-white/25 flex items-center justify-center font-bold mb-4 shadow-sm'>
-                    <Building2 size={22} />
+                <div className='p-5 sm:p-6 rounded-2xl bg-white/[0.08] backdrop-blur-md border border-white/15 hover:border-orange-400/50 hover:bg-white/[0.12] transition-all duration-300 shadow-xl'>
+                  <div className='flex items-center gap-3.5 mb-3'>
+                    <div className='w-11 h-11 rounded-xl bg-orange-500/20 text-orange-400 border border-orange-400/30 flex items-center justify-center font-bold shadow-sm flex-shrink-0'>
+                      <Building2 size={20} />
+                    </div>
+                    <h3 className='font-INB text-base sm:text-lg text-white leading-snug'>Direct Mohali Engineers</h3>
                   </div>
-                  <h3 className='font-INB text-lg text-white mb-1.5'>Direct Mohali Engineers</h3>
                   <p className='text-xs sm:text-sm text-blue-100/75 leading-relaxed'>
                     Collaborate directly with our senior full-stack developers in Mohali, Punjab. No account managers or outsourced intermediaries.
                   </p>
                 </div>
 
-                <div className='p-6 rounded-2xl bg-white/[0.08] backdrop-blur-md border border-white/15 hover:border-white/40 hover:bg-white/[0.12] transition-all duration-300 shadow-xl'>
-                  <div className='w-12 h-12 rounded-xl bg-white/15 text-white border border-white/25 flex items-center justify-center font-bold mb-4 shadow-sm'>
-                    <ShieldCheck size={22} />
+                <div className='p-5 sm:p-6 rounded-2xl bg-white/[0.08] backdrop-blur-md border border-white/15 hover:border-orange-400/50 hover:bg-white/[0.12] transition-all duration-300 shadow-xl'>
+                  <div className='flex items-center gap-3.5 mb-3'>
+                    <div className='w-11 h-11 rounded-xl bg-orange-500/20 text-orange-400 border border-orange-400/30 flex items-center justify-center font-bold shadow-sm flex-shrink-0'>
+                      <ShieldCheck size={20} />
+                    </div>
+                    <h3 className='font-INB text-base sm:text-lg text-white leading-snug'>OWASP Bank-Grade Security</h3>
                   </div>
-                  <h3 className='font-INB text-lg text-white mb-1.5'>OWASP Bank-Grade Security</h3>
                   <p className='text-xs sm:text-sm text-blue-100/75 leading-relaxed'>
                     Parameterized queries, CSRF defenses, JWT session tokens, and automated penetration testing before every production deployment.
                   </p>
                 </div>
 
-                <div className='p-6 rounded-2xl bg-white/[0.08] backdrop-blur-md border border-white/15 hover:border-white/40 hover:bg-white/[0.12] transition-all duration-300 shadow-xl'>
-                  <div className='w-12 h-12 rounded-xl bg-white/15 text-white border border-white/25 flex items-center justify-center font-bold mb-4 shadow-sm'>
-                    <Workflow size={22} />
+                <div className='p-5 sm:p-6 rounded-2xl bg-white/[0.08] backdrop-blur-md border border-white/15 hover:border-orange-400/50 hover:bg-white/[0.12] transition-all duration-300 shadow-xl'>
+                  <div className='flex items-center gap-3.5 mb-3'>
+                    <div className='w-11 h-11 rounded-xl bg-orange-500/20 text-orange-400 border border-orange-400/30 flex items-center justify-center font-bold shadow-sm flex-shrink-0'>
+                      <Workflow size={20} />
+                    </div>
+                    <h3 className='font-INB text-base sm:text-lg text-white leading-snug'>2-Week Sprints & Staging</h3>
                   </div>
-                  <h3 className='font-INB text-lg text-white mb-1.5'>2-Week Sprints & Staging</h3>
                   <p className='text-xs sm:text-sm text-blue-100/75 leading-relaxed'>
                     Structured 14-day development cycles. Every sprint concludes with working software demonstrated on private cloud staging servers.
                   </p>
@@ -610,10 +619,10 @@ export default function WebApplication() {
           {/* =========================================================================
               4. OFFICIAL CONSULTATION & RFP SUBMISSION HUB (BRAND BLUE ACCENTS)
              ========================================================================= */}
-          <section id='project-consultation' className='py-14 sm:py-20 bg-gradient-to-b from-white via-[#182b67]/5 to-slate-50 border-b border-slate-200'>
+          <section id='project-consultation' className='py-6 sm:py-8 bg-gradient-to-b from-white via-[#182b67]/5 to-slate-50 border-b border-slate-200'>
             <div className='w-full max-w-[1850px] mx-auto px-4 sm:px-6 md:px-8 lg:px-10 xl:px-12'>
-              <div className='text-center max-w-4xl mx-auto mb-10 sm:mb-12'>
-                <span className='inline-block px-3.5 py-1 rounded-full text-xs font-bold uppercase tracking-wider bg-[#182b67]/10 text-[#182b67] border border-[#182b67]/20 mb-2'>
+              <div className='text-center max-w-4xl mx-auto mb-5 sm:mb-6'>
+                <span className='inline-block px-3.5 py-1 rounded-full text-xs font-bold uppercase tracking-wider bg-orange-100 text-orange-700 border border-orange-200 mb-2'>
                   Technical Discovery Call
                 </span>
                 <h2 className='text-2xl sm:text-3xl md:text-4xl font-INB text-[#182b67] leading-tight'>
@@ -667,7 +676,7 @@ export default function WebApplication() {
                               onChange={handleFormChange}
                               required
                               placeholder='e.g. Alok Verma'
-                              className='w-full px-3.5 py-2.5 rounded-xl border border-slate-200 focus:border-[#182b67] focus:ring-2 focus:ring-[#182b67]/20 text-sm outline-none transition'
+                              className='w-full px-3.5 py-2.5 rounded-xl border border-slate-200 focus:border-orange-500 focus:ring-2 focus:ring-orange-500/20 text-sm outline-none transition'
                             />
                           </div>
                           <div>
@@ -681,7 +690,7 @@ export default function WebApplication() {
                               onChange={handleFormChange}
                               required
                               placeholder='alok@company.com'
-                              className='w-full px-3.5 py-2.5 rounded-xl border border-slate-200 focus:border-[#182b67] focus:ring-2 focus:ring-[#182b67]/20 text-sm outline-none transition'
+                              className='w-full px-3.5 py-2.5 rounded-xl border border-slate-200 focus:border-orange-500 focus:ring-2 focus:ring-orange-500/20 text-sm outline-none transition'
                             />
                           </div>
                         </div>
@@ -698,7 +707,7 @@ export default function WebApplication() {
                               onChange={handleFormChange}
                               required
                               placeholder='+91 98765 43210'
-                              className='w-full px-3.5 py-2.5 rounded-xl border border-slate-200 focus:border-[#182b67] focus:ring-2 focus:ring-[#182b67]/20 text-sm outline-none transition'
+                              className='w-full px-3.5 py-2.5 rounded-xl border border-slate-200 focus:border-orange-500 focus:ring-2 focus:ring-orange-500/20 text-sm outline-none transition'
                             />
                           </div>
                           <div>
@@ -711,7 +720,7 @@ export default function WebApplication() {
                               value={formData.organization}
                               onChange={handleFormChange}
                               placeholder='Global Ventures Inc.'
-                              className='w-full px-3.5 py-2.5 rounded-xl border border-slate-200 focus:border-[#182b67] focus:ring-2 focus:ring-[#182b67]/20 text-sm outline-none transition'
+                              className='w-full px-3.5 py-2.5 rounded-xl border border-slate-200 focus:border-orange-500 focus:ring-2 focus:ring-orange-500/20 text-sm outline-none transition'
                             />
                           </div>
                         </div>
@@ -725,7 +734,7 @@ export default function WebApplication() {
                               name='appCategory'
                               value={formData.appCategory}
                               onChange={handleFormChange}
-                              className='w-full px-3.5 py-2.5 rounded-xl border border-slate-200 focus:border-[#182b67] focus:ring-2 focus:ring-[#182b67]/20 text-sm outline-none transition bg-white'
+                              className='w-full px-3.5 py-2.5 rounded-xl border border-slate-200 focus:border-orange-500 focus:ring-2 focus:ring-orange-500/20 text-sm outline-none transition bg-white'
                             >
                               <option>Full MERN Stack Web Platform (MongoDB, Express, React, Node)</option>
                               <option>Java & Spring Boot Enterprise Microservices</option>
@@ -743,7 +752,7 @@ export default function WebApplication() {
                               name='timeline'
                               value={formData.timeline}
                               onChange={handleFormChange}
-                              className='w-full px-3.5 py-2.5 rounded-xl border border-slate-200 focus:border-[#182b67] focus:ring-2 focus:ring-[#182b67]/20 text-sm outline-none transition bg-white'
+                              className='w-full px-3.5 py-2.5 rounded-xl border border-slate-200 focus:border-orange-500 focus:ring-2 focus:ring-orange-500/20 text-sm outline-none transition bg-white'
                             >
                               <option>Within 4-8 Weeks</option>
                               <option>Within 2-3 Months</option>
@@ -763,14 +772,14 @@ export default function WebApplication() {
                             value={formData.message}
                             onChange={handleFormChange}
                             placeholder='Tell us about your expected users, required integrations, third-party APIs, and deployment preferences...'
-                            className='w-full px-3.5 py-2.5 rounded-xl border border-slate-200 focus:border-[#182b67] focus:ring-2 focus:ring-[#182b67]/20 text-sm outline-none transition resize-none'
+                            className='w-full px-3.5 py-2.5 rounded-xl border border-slate-200 focus:border-orange-500 focus:ring-2 focus:ring-orange-500/20 text-sm outline-none transition resize-none'
                           ></textarea>
                         </div>
 
                         <button
                           type='submit'
                           disabled={formSubmitting}
-                          className='w-full py-3.5 px-6 rounded-xl bg-[#182b67] hover:bg-[#101f4c] disabled:bg-[#182b67]/50 text-white font-INB text-xs sm:text-sm uppercase tracking-wider shadow-md shadow-[#182b67]/25 transition cursor-pointer flex items-center justify-center gap-2'
+                          className='w-full py-3.5 px-6 rounded-xl bg-orange-500 hover:bg-orange-600 disabled:bg-orange-300 text-white font-INB text-xs sm:text-sm uppercase tracking-wider shadow-md shadow-orange-500/25 transition cursor-pointer flex items-center justify-center gap-2'
                         >
                           {formSubmitting ? (
                             <span>Submitting Technical Scope...</span>
@@ -786,10 +795,10 @@ export default function WebApplication() {
                   </div>
                 </div>
 
-                {/* Direct Engineering Channel Card (5 Cols) - Deep Brand Blue Design: rgb(24, 43, 103) */}
+                {/* Direct Engineering Channel Card (5 Cols) */}
                 <div className='lg:col-span-5 rounded-2xl sm:rounded-3xl p-6 sm:p-8 bg-gradient-to-br from-[#182b67] via-[#122254] to-[#0c1636] border border-[#182b67]/60 shadow-xl shadow-[#182b67]/20 text-white flex flex-col justify-between'>
                   <div>
-                    <span className='px-3 py-1 rounded-full bg-white/15 text-white text-[10px] font-bold uppercase tracking-wider border border-white/25'>
+                    <span className='px-3 py-1 rounded-full bg-orange-500 text-white text-[10px] font-bold uppercase tracking-wider shadow-xs'>
                       Mohali Software Center
                     </span>
                     <h3 className='text-xl sm:text-2xl font-INB mt-3 mb-2 text-white'>
@@ -801,7 +810,7 @@ export default function WebApplication() {
 
                     <div className='space-y-4 mb-6'>
                       <div className='flex items-start gap-3.5'>
-                        <div className='w-10 h-10 rounded-xl bg-white/15 border border-white/20 flex items-center justify-center text-white flex-shrink-0'>
+                        <div className='w-10 h-10 rounded-xl bg-orange-500/20 border border-orange-400/30 flex items-center justify-center text-orange-400 flex-shrink-0'>
                           <PhoneCall size={18} />
                         </div>
                         <div>
@@ -813,7 +822,7 @@ export default function WebApplication() {
                       </div>
 
                       <div className='flex items-start gap-3.5'>
-                        <div className='w-10 h-10 rounded-xl bg-white/15 border border-white/20 flex items-center justify-center text-white flex-shrink-0'>
+                        <div className='w-10 h-10 rounded-xl bg-orange-500/20 border border-orange-400/30 flex items-center justify-center text-orange-400 flex-shrink-0'>
                           <Mail size={18} />
                         </div>
                         <div>
@@ -825,7 +834,7 @@ export default function WebApplication() {
                       </div>
 
                       <div className='flex items-start gap-3.5'>
-                        <div className='w-10 h-10 rounded-xl bg-white/15 border border-white/20 flex items-center justify-center text-white flex-shrink-0'>
+                        <div className='w-10 h-10 rounded-xl bg-orange-500/20 border border-orange-400/30 flex items-center justify-center text-orange-400 flex-shrink-0'>
                           <Building2 size={18} />
                         </div>
                         <div>
@@ -852,34 +861,34 @@ export default function WebApplication() {
           {/* =========================================================================
               5. EXECUTIVE FAQS (CONCISE & ESSENTIAL)
              ========================================================================= */}
-          <section className='py-14 sm:py-20 bg-white'>
+          <section className='py-5 sm:py-8 bg-white'>
             <div className='w-full max-w-[1850px] mx-auto px-4 sm:px-6 md:px-8 lg:px-10 xl:px-12'>
-              <div className='grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start w-full'>
+              <div className='grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-10 items-start w-full'>
                 {/* Left Column: Context & Support Card */}
                 <div className='lg:col-span-4'>
-                  <span className='text-[#182b67] font-bold uppercase tracking-wider text-xs'>
+                  <span className='text-orange-600 font-bold uppercase tracking-wider text-xs'>
                     Executive Answers
                   </span>
                   <h2 className='text-2xl sm:text-3xl md:text-4xl font-INB text-[#182b67] mt-1 mb-2'>
                     Frequently Asked Questions
                   </h2>
-                  <p className='text-slate-600 text-xs sm:text-sm leading-relaxed mb-6'>
+                  <p className='text-slate-600 text-xs sm:text-sm leading-relaxed mb-5'>
                     Straightforward answers about source code ownership, performance guarantees, technology selection, and sprint delivery horizons.
                   </p>
 
-                  <div className='p-5 sm:p-6 rounded-2xl bg-[#182b67]/5 border border-[#182b67]/15'>
+                  <div className='p-5 sm:p-6 rounded-2xl bg-orange-50/50 border border-orange-200/60'>
                     <h4 className='font-INB text-sm text-[#182b67] mb-1'>Need direct technical clarification?</h4>
                     <p className='text-xs text-slate-500 mb-4'>Speak directly with our senior software engineering team in Mohali.</p>
                     <a
                       href='tel:+918288029916'
-                      className='w-full py-2.5 px-4 rounded-xl bg-[#182b67] hover:bg-[#101f4c] text-white font-INB text-xs uppercase tracking-wider transition flex items-center justify-center gap-2 mb-2.5 shadow-sm'
+                      className='w-full py-2.5 px-4 rounded-xl bg-orange-500 hover:bg-orange-600 text-white font-INB text-xs uppercase tracking-wider transition flex items-center justify-center gap-2 mb-2.5 shadow-md shadow-orange-500/20'
                     >
                       <PhoneCall size={14} />
                       <span>+91 82880 29916</span>
                     </a>
                     <a
                       href='#project-consultation'
-                      className='w-full py-2.5 px-4 rounded-xl bg-white hover:bg-slate-100 text-[#182b67] font-bold text-xs uppercase tracking-wider border border-[#182b67]/20 transition flex items-center justify-center gap-2'
+                      className='w-full py-2.5 px-4 rounded-xl bg-white hover:bg-orange-50 text-[#182b67] hover:text-orange-600 font-bold text-xs uppercase tracking-wider border border-orange-200 transition flex items-center justify-center gap-2'
                     >
                       <span>Submit Technical RFP</span>
                     </a>
@@ -887,30 +896,30 @@ export default function WebApplication() {
                 </div>
 
                 {/* Right Column: Accordion FAQ List */}
-                <div className='lg:col-span-8 space-y-3'>
+                <div className='lg:col-span-8 space-y-2.5'>
                   {executiveFaqs.map((faq, index) => {
                     const isOpen = openFaq === index
                     return (
                       <div
                         key={index}
-                        className='rounded-xl sm:rounded-2xl border border-slate-200 overflow-hidden transition-colors hover:border-[#182b67]/40'
+                        className='rounded-xl sm:rounded-2xl border border-slate-200 overflow-hidden transition-colors hover:border-orange-400'
                       >
                         <button
                           onClick={() => setOpenFaq(isOpen ? null : index)}
-                          className='w-full p-4 sm:p-5 text-left flex items-center justify-between gap-4 bg-white hover:bg-slate-50 transition cursor-pointer'
+                          className='w-full p-4 sm:p-4.5 text-left flex items-center justify-between gap-4 bg-white hover:bg-slate-50 transition cursor-pointer'
                         >
-                          <span className={`font-INB text-sm sm:text-base ${isOpen ? 'text-[#182b67]' : 'text-slate-800'}`}>
+                          <span className={`font-INB text-sm sm:text-base ${isOpen ? 'text-orange-600' : 'text-slate-800'}`}>
                             {faq.q}
                           </span>
                           <ChevronDown
                             size={18}
                             className={`text-slate-500 flex-shrink-0 transition-transform duration-300 ${
-                              isOpen ? 'rotate-180 text-[#182b67]' : ''
+                              isOpen ? 'rotate-180 text-orange-500' : ''
                             }`}
                           />
                         </button>
                         {isOpen && (
-                          <div className='px-4 sm:px-5 pb-5 pt-1 text-slate-600 text-xs sm:text-sm leading-relaxed border-t border-slate-100 bg-slate-50/50'>
+                          <div className='px-4 sm:px-5 pb-4 pt-1 text-slate-600 text-xs sm:text-sm leading-relaxed border-t border-slate-100 bg-slate-50/50'>
                             {faq.a}
                           </div>
                         )}
