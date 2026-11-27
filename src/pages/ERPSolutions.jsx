@@ -617,8 +617,10 @@ export default function ERPSolutions() {
 
                   {/* Dual Action Buttons (Highlighting /clientRegister) */}
                   <div className='flex flex-col sm:flex-row items-stretch sm:items-center justify-center lg:justify-start gap-2.5 sm:gap-4 mb-5 sm:mb-6 w-full min-w-0'>
-                    <motion.button
-                      onClick={() => navigate('/clientRegister')}
+                    <motion.a
+                      href='/clientRegister'
+                      target='_blank'
+                      rel='noopener noreferrer'
                       whileHover={{ scale: 1.02 }}
                       whileTap={{ scale: 0.98 }}
                       className='w-full sm:w-auto px-4 sm:px-8 py-3.5 rounded-xl bg-orange-500 hover:bg-orange-600 text-white font-INB text-xs sm:text-sm uppercase tracking-wider shadow-lg shadow-orange-500/25 transition-all flex items-center justify-center gap-2 cursor-pointer'
@@ -626,7 +628,7 @@ export default function ERPSolutions() {
                       <span className='sm:hidden'>Take a Free Trial / Register</span>
                       <span className='hidden sm:inline'>Take a Free Trial / Client Register</span>
                       <ArrowRight size={16} className='flex-shrink-0' />
-                    </motion.button>
+                    </motion.a>
 
                     <a
                       href='tel:+918288029916'
@@ -764,13 +766,15 @@ export default function ERPSolutions() {
                     Proven ERP Platforms for Your Sector
                   </h2>
                 </div>
-                <button
-                  onClick={() => navigate('/clientRegister')}
+                <a
+                  href='/clientRegister'
+                  target='_blank'
+                  rel='noopener noreferrer'
                   className='text-xs sm:text-sm font-bold text-orange-600 hover:text-orange-700 flex items-center gap-1.5 transition cursor-pointer'
                 >
                   <span>Register Your Industry Profile</span>
                   <ChevronRight size={16} />
-                </button>
+                </a>
               </div>
 
               {/* Cards Grid: 1 col on mobile, 2 on tablet, 5 on desktop */}
@@ -1143,14 +1147,16 @@ export default function ERPSolutions() {
 
                     {/* Dual Action Buttons (Highlighting /clientRegister) */}
                     <div className='pt-6 border-t border-slate-200 flex flex-col sm:flex-row items-center gap-3'>
-                      <button
-                        onClick={() => navigate('/clientRegister')}
+                      <a
+                        href='/clientRegister'
+                        target='_blank'
+                        rel='noopener noreferrer'
                         className='w-full sm:w-auto px-6 py-3.5 rounded-xl bg-orange-500 hover:bg-orange-600 text-white font-INB text-xs uppercase tracking-wider shadow-md hover:shadow-lg transition active:scale-95 flex items-center justify-center gap-2 cursor-pointer'
                       >
                         <Sparkles size={15} />
                         <span>Request Demo & Register on Client Portal</span>
                         <ArrowRight size={14} />
-                      </button>
+                      </a>
 
                       <Link
                         to={currentSuite.pageUrl}
@@ -1300,13 +1306,15 @@ export default function ERPSolutions() {
                     </div>
                   </div>
 
-                  <button
-                    onClick={() => navigate('/clientRegister')}
+                  <a
+                    href='/clientRegister'
+                    target='_blank'
+                    rel='noopener noreferrer'
                     className='w-full sm:w-auto px-7 py-3.5 rounded-xl bg-orange-500 hover:bg-orange-600 text-white font-INB text-xs uppercase tracking-wider shadow-md hover:shadow-lg transition flex items-center justify-center gap-2 cursor-pointer'
                   >
                     <span>Configure in Client Portal (/clientRegister)</span>
                     <ArrowRight size={15} />
-                  </button>
+                  </a>
                 </div>
               </div>
             </div>
@@ -1486,13 +1494,15 @@ export default function ERPSolutions() {
                   </div>
 
                   <div className='pt-6 border-t border-slate-100'>
-                    <button
-                      onClick={() => navigate('/clientRegister')}
+                    <a
+                      href='/clientRegister'
+                      target='_blank'
+                      rel='noopener noreferrer'
                       className='w-full py-4 px-6 rounded-xl bg-orange-500 hover:bg-orange-600 text-white font-INB text-sm uppercase tracking-wider shadow-md hover:shadow-lg transition flex items-center justify-center gap-2 cursor-pointer'
                     >
                       <span>Proceed to Client Registration Portal</span>
                       <ArrowRight size={17} />
-                    </button>
+                    </a>
                     <p className='text-center text-xs text-slate-400 mt-2'>
                       Access portal at: <code className='text-blue-950 font-bold'>/clientRegister</code>
                     </p>
@@ -1721,13 +1731,15 @@ export default function ERPSolutions() {
                     </div>
                     <div className='text-xs text-slate-500 truncate'>Call: +91 82880 29916</div>
                   </div>
-                  <button
-                    onClick={() => navigate('/clientRegister')}
+                  <a
+                    href='/clientRegister'
+                    target='_blank'
+                    rel='noopener noreferrer'
                     className='px-4 py-2 rounded-xl bg-orange-500 hover:bg-orange-600 text-white font-INB text-xs uppercase tracking-wider shadow-md hover:scale-105 active:scale-95 transition flex items-center gap-1.5 flex-shrink-0 cursor-pointer'
                   >
                     <span>Register Now</span>
                     <ArrowRight size={13} />
-                  </button>
+                  </a>
                 </div>
               </motion.div>
             )}
