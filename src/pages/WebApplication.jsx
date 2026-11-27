@@ -906,13 +906,13 @@ export default function WebApplication() {
                       >
                         <button
                           onClick={() => setOpenFaq(isOpen ? null : index)}
-                          className='w-full p-4 sm:p-4.5 text-left flex items-center justify-between gap-4 bg-white hover:bg-slate-50 transition cursor-pointer'
+                          className='w-full py-2.5 sm:py-3 px-4 sm:px-5 text-left flex items-center justify-between gap-4 bg-white hover:bg-slate-50 transition cursor-pointer'
                         >
-                          <span className={`font-INB text-sm sm:text-base ${isOpen ? 'text-orange-600' : 'text-slate-800'}`}>
+                          <span className={`font-INB text-xs sm:text-sm md:text-[15px] ${isOpen ? 'text-orange-600' : 'text-slate-800'}`}>
                             {faq.q}
                           </span>
                           <ChevronDown
-                            size={18}
+                            size={16}
                             className={`text-slate-500 flex-shrink-0 transition-transform duration-300 ${
                               isOpen ? 'rotate-180 text-orange-500' : ''
                             }`}

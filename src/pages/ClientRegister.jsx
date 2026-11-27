@@ -39,7 +39,14 @@ import {
   Search,
   Server,
   HelpCircle,
-  CheckSquare
+  CheckSquare,
+  Filter,
+  Eye,
+  SlidersHorizontal,
+  X,
+  MessageSquare,
+  Database,
+  Code2
 } from "lucide-react";
 
 import Navbar from '../components/Navbar';
@@ -124,6 +131,8 @@ export default function RegistrationForm() {
   const [validationErrors, setValidationErrors] = useState({});
   const [deploymentMode, setDeploymentMode] = useState("cloud"); // "cloud" | "onpremise"
   const [moduleSearchQuery, setModuleSearchQuery] = useState("");
+  const [moduleFilterTab, setModuleFilterTab] = useState("all"); // "all" | "selected" | "mandatory"
+  const [expandAllGroups, setExpandAllGroups] = useState(true);
 
   // Confirmation Modal Handler
   const openConfirmationModal = (message) => {
@@ -228,7 +237,6 @@ export default function RegistrationForm() {
         setBusinessNature(String(match.id));
         setBusinessNatureLabel(match.businessNature);
       } else {
-        // Fallback to first available or set label
         setBusinessNature(String(allBusinessNature[0].id));
         setBusinessNatureLabel(sector.name);
       }
@@ -317,6 +325,21 @@ export default function RegistrationForm() {
     }, 0);
     return selectedSum + baseMandatoryPrice;
   }, [selectedModules, fetchedModules, baseMandatoryPrice]);
+
+  // Flattened total module count & selected count
+  const allFlattenedModules = useMemo(() => {
+    const flatten = (items) => items.flatMap((i) => [i, ...(i.children ? flatten(i.children) : [])]);
+    return flatten(fetchedModules);
+  }, [fetchedModules]);
+
+  const totalModuleCount = allFlattenedModules.length;
+  const totalSelectedCount = useMemo(() => {
+    return Object.values(selectedModules).filter(Boolean).length;
+  }, [selectedModules]);
+
+  const selectedModulesList = useMemo(() => {
+    return allFlattenedModules.filter((m) => selectedModules[m.id]);
+  }, [allFlattenedModules, selectedModules]);
 
   const toggleModule = (module, checked) => {
     if (module.mandatoryModule && !checked) return;
@@ -554,22 +577,48 @@ export default function RegistrationForm() {
     }
   };
 
-  // Filtered Modules for Search
-  const filteredModules = useMemo(() => {
-    if (!moduleSearchQuery.trim()) return fetchedModules;
-    const query = moduleSearchQuery.toLowerCase();
+  // Split modules into Standalone Roots vs Groups with Children
+  const { standaloneModules, groupModules } = useMemo(() => {
+    let list = fetchedModules;
 
-    return fetchedModules.filter((m) => {
-      const matchName = (m.name || "").toLowerCase().includes(query);
-      const matchChildren = m.children && m.children.some((c) => (c.name || "").toLowerCase().includes(query));
-      return matchName || matchChildren;
-    });
-  }, [fetchedModules, moduleSearchQuery]);
+    // Filter by search query if present
+    if (moduleSearchQuery.trim()) {
+      const q = moduleSearchQuery.toLowerCase();
+      const matchNode = (node) => {
+        const selfMatch = (node.name || "").toLowerCase().includes(q);
+        const childMatch = node.children && node.children.some(matchNode);
+        return selfMatch || childMatch;
+      };
+      list = list.filter(matchNode);
+    }
+
+    // Filter by tab
+    if (moduleFilterTab === "selected") {
+      const filterSelected = (node) => {
+        const selfSelected = !!selectedModules[node.id];
+        const hasSelectedChild = node.children && node.children.some(filterSelected);
+        return selfSelected || hasSelectedChild;
+      };
+      list = list.filter(filterSelected);
+    } else if (moduleFilterTab === "mandatory") {
+      const filterMandatory = (node) => {
+        const selfMandatory = !!node.mandatoryModule;
+        const hasMandatoryChild = node.children && node.children.some(filterMandatory);
+        return selfMandatory || hasMandatoryChild;
+      };
+      list = list.filter(filterMandatory);
+    }
+
+    const standalone = list.filter((m) => !m.children || m.children.length === 0);
+    const groups = list.filter((m) => m.children && m.children.length > 0);
+
+    return { standaloneModules: standalone, groupModules: groups };
+  }, [fetchedModules, moduleSearchQuery, moduleFilterTab, selectedModules]);
 
   const activeSectorObj = VISUAL_SECTORS.find((s) => s.id === selectedSectorCard) || VISUAL_SECTORS[0];
 
   return (
-    <div className="min-h-screen bg-[#f8fafc] text-slate-900 font-sans antialiased overflow-x-hidden selection:bg-orange-500 selection:text-white">
+    <div className="min-h-screen bg-[#f8fafc] text-slate-900 font-sans antialiased overflow-x-clip selection:bg-orange-500 selection:text-white">
       <ScrollToHashElement />
       <SocialLinks className="hidden lg:block" />
       <ScrollButtons />
@@ -593,13 +642,13 @@ export default function RegistrationForm() {
       <div className="fixed top-4 right-4 z-50 lg:hidden"><Example /></div>
 
       {/* Main Registration Portal Container */}
-      <main className="w-full max-w-[1750px] mx-auto px-4 sm:px-6 md:px-8 lg:px-10 xl:px-12 pt-20 sm:pt-24 lg:pt-28 pb-16">
+      <main className="w-full max-w-[1550px] mx-auto px-4 sm:px-6 md:px-8 lg:px-10 pt-20 sm:pt-24 lg:pt-28 pb-16">
         
         {/* =========================================================================
             1. RICH ENTERPRISE HERO & VISUAL SECTOR PREVIEW
            ========================================================================= */}
         <section className="relative mb-8 sm:mb-10">
-          <div className="max-w-5xl mx-auto text-center">
+          <div className="max-w-4xl mx-auto text-center">
             {/* Luminous Badge */}
             <motion.div
               initial={{ opacity: 0, y: -15 }}
@@ -615,7 +664,7 @@ export default function RegistrationForm() {
               initial={{ opacity: 0, y: 15 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.1 }}
-              className="text-3xl sm:text-4xl md:text-5xl lg:text-[3.25rem] font-INB text-[#182b67] tracking-tight leading-[1.18] sm:leading-[1.14] mb-3.5"
+              className="text-3xl sm:text-4xl md:text-5xl font-INB text-[#182b67] tracking-tight leading-[1.18] sm:leading-[1.14] mb-3.5"
             >
               Configure Your Enterprise ERP <br />
               <span className="text-orange-500">Live Modular Deployment & Pricing</span>
@@ -625,13 +674,13 @@ export default function RegistrationForm() {
               initial={{ opacity: 0, y: 15 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.2 }}
-              className="text-slate-600 text-xs sm:text-sm md:text-base max-w-3xl mx-auto leading-relaxed mb-6"
+              className="text-slate-600 text-xs sm:text-sm md:text-base max-w-2xl mx-auto leading-relaxed mb-6"
             >
-              Tailor your industry ERP or custom enterprise platform. Select your business domain, customize modular workflows, review transparent deployment fees, and immediately launch your private staging sandbox or complete full Git code handover.
+              Tailor your industry ERP or custom enterprise platform. Select your business domain, customize modular workflows, review transparent deployment fees, and immediately launch your private staging sandbox.
             </motion.p>
 
             {/* Quick Metrics Strip */}
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5 max-w-4xl mx-auto mb-8">
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5 max-w-3xl mx-auto mb-8">
               <div className="p-3 rounded-2xl bg-white border border-slate-200/90 shadow-xs text-center">
                 <div className="font-INB text-base sm:text-lg text-[#182b67]">12+ Yrs</div>
                 <div className="text-[10px] sm:text-[11px] text-slate-500 font-medium">Mohali Engineering</div>
@@ -1083,7 +1132,7 @@ export default function RegistrationForm() {
             </motion.div>
           ) : (
             /* =========================================================================
-                STEP 2: MODULAR ARCHITECTURE MATRIX & STICKY INVESTMENT CONSOLE
+                STEP 2: HIGH-DENSITY MODULAR STUDIO & CONSOLE
                ========================================================================= */
             <motion.div
               key="step2"
@@ -1106,124 +1155,188 @@ export default function RegistrationForm() {
                   </button>
 
                   <div className="flex items-center gap-2">
-                    <span className="text-xs text-slate-500">Target Industry:</span>
+                    <span className="text-xs text-slate-500">Active Sector:</span>
                     <span className="px-2.5 py-1 rounded-full text-xs font-bold bg-orange-100 text-orange-700 border border-orange-200">
-                      {businessNatureLabel || "Enterprise"}
+                      {businessNatureLabel || "Enterprise Solution"}
                     </span>
                   </div>
                 </div>
 
-                {/* Module Catalog Main Card */}
-                <div className="bg-white rounded-3xl border border-slate-200 shadow-sm overflow-hidden">
-                  {/* Deep Navy Card Header */}
-                  <div className="bg-[#182b67] p-6 sm:p-8 text-white flex flex-col md:flex-row md:items-center justify-between gap-4">
-                    <div>
-                      <div className="text-orange-400 font-bold uppercase tracking-wider text-[11px] mb-1">
-                        Interactive Modular Architecture Studio
+                {/* Module Studio Main Container */}
+                <div className="space-y-4">
+                  {/* Top Compact Studio Header & Controls */}
+                  <div className="bg-[#182b67] p-5 sm:p-6 rounded-3xl text-white shadow-md relative overflow-hidden">
+                    <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 relative z-10">
+                      <div>
+                        <div className="text-orange-400 font-bold uppercase tracking-wider text-[11px] mb-0.5">
+                          Enterprise Solution Architecture
+                        </div>
+                        <h3 className="font-INB text-lg sm:text-xl text-white">
+                          {moduleCategoryName || "Core Solution Suite"}
+                        </h3>
+                        <p className="text-blue-100/75 text-xs mt-0.5">
+                          Toggle capabilities to tailor workflows. Core engine modules are pre-locked.
+                        </p>
                       </div>
-                      <h3 className="font-INB text-xl sm:text-2xl text-white">
-                        {moduleCategoryName || "Core Solution Modules"}
-                      </h3>
-                      <p className="text-blue-100/75 text-xs sm:text-sm mt-1 max-w-xl">
-                        Activate the functional modules your organization requires. Core engine modules are automatically locked for operational integrity.
-                      </p>
-                    </div>
 
-                    <div className="flex items-center gap-2 self-start md:self-auto">
-                      <div className="px-3.5 py-1.5 rounded-xl bg-white/10 border border-white/15 text-xs font-bold text-white flex items-center gap-2">
-                        <Layers size={15} className="text-orange-400" />
-                        <span>{Object.values(selectedModules).filter(Boolean).length} Modules Active</span>
+                      <div className="flex items-center gap-2.5 flex-wrap">
+                        <div className="px-3 py-1.5 rounded-xl bg-white/10 border border-white/15 text-xs font-bold text-white flex items-center gap-2">
+                          <Layers size={14} className="text-orange-400" />
+                          <span>{totalSelectedCount} of {totalModuleCount} Active</span>
+                        </div>
+                        <button
+                          onClick={() => setExpandAllGroups(!expandAllGroups)}
+                          className="px-3 py-1.5 rounded-xl bg-orange-500/20 hover:bg-orange-500/30 border border-orange-400/40 text-xs font-bold text-orange-200 transition cursor-pointer"
+                        >
+                          {expandAllGroups ? "Collapse Groups" : "Expand Groups"}
+                        </button>
                       </div>
                     </div>
                   </div>
 
-                  {/* Search Bar & Quick Filters Bar */}
-                  <div className="p-4 sm:p-5 border-b border-slate-100 bg-slate-50/60 flex flex-col sm:flex-row items-center justify-between gap-3">
-                    <div className="relative w-full sm:w-72">
+                  {/* Filter Tabs & Search Controls */}
+                  <div className="bg-white p-3.5 sm:p-4 rounded-2xl border border-slate-200 shadow-2xs space-y-3">
+                    <div className="flex flex-col sm:flex-row items-center justify-between gap-3">
+                      {/* Filter Tabs */}
+                      <div className="flex items-center gap-1.5 overflow-x-auto w-full sm:w-auto pb-1 sm:pb-0 scrollbar-none">
+                        <button
+                          onClick={() => setModuleFilterTab("all")}
+                          className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer whitespace-nowrap ${
+                            moduleFilterTab === "all"
+                              ? 'bg-orange-500 text-white shadow-xs'
+                              : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
+                          }`}
+                        >
+                          All Modules ({totalModuleCount})
+                        </button>
+
+                        <button
+                          onClick={() => setModuleFilterTab("selected")}
+                          className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer whitespace-nowrap ${
+                            moduleFilterTab === "selected"
+                              ? 'bg-orange-500 text-white shadow-xs'
+                              : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
+                          }`}
+                        >
+                          Selected ({totalSelectedCount})
+                        </button>
+
+                        <button
+                          onClick={() => setModuleFilterTab("mandatory")}
+                          className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer whitespace-nowrap ${
+                            moduleFilterTab === "mandatory"
+                              ? 'bg-orange-500 text-white shadow-xs'
+                              : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
+                          }`}
+                        >
+                          Core Mandatory
+                        </button>
+                      </div>
+
+                      {/* Quick Select Actions */}
+                      <div className="flex items-center gap-2.5 w-full sm:w-auto justify-between sm:justify-end">
+                        <button
+                          onClick={() => {
+                            const allOnes = {};
+                            const selectAll = (list) => {
+                              list.forEach((m) => {
+                                allOnes[m.id] = true;
+                                if (m.children) selectAll(m.children);
+                              });
+                            };
+                            selectAll(fetchedModules);
+                            setSelectedModules(allOnes);
+                          }}
+                          className="text-xs font-bold text-orange-600 hover:text-orange-700 transition cursor-pointer"
+                        >
+                          + Select All
+                        </button>
+
+                        <span className="text-slate-300">|</span>
+
+                        <button
+                          onClick={() => {
+                            const mandatoryOnly = {};
+                            const resetToMandatory = (list) => {
+                              list.forEach((m) => {
+                                if (m.mandatoryModule) mandatoryOnly[m.id] = true;
+                                if (m.children) resetToMandatory(m.children);
+                              });
+                            };
+                            resetToMandatory(fetchedModules);
+                            setSelectedModules(mandatoryOnly);
+                          }}
+                          className="text-xs font-bold text-slate-500 hover:text-orange-600 transition cursor-pointer flex items-center gap-1"
+                        >
+                          <RotateCcw size={12} />
+                          <span>Reset Core</span>
+                        </button>
+                      </div>
+                    </div>
+
+                    {/* Search Bar */}
+                    <div className="relative w-full">
                       <Search size={15} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400" />
                       <input
                         type="text"
-                        placeholder="Search modules..."
+                        placeholder="Search capabilities (e.g. Profile, Ledger, Invoicing, Attendance, Inventory)..."
                         value={moduleSearchQuery}
                         onChange={(e) => setModuleSearchQuery(e.target.value)}
-                        className="w-full pl-9 pr-3 py-2 rounded-xl border border-slate-200 bg-white text-xs outline-none focus:border-orange-500 focus:ring-2 focus:ring-orange-500/20"
+                        className="w-full pl-9 pr-3 py-2 rounded-xl border border-slate-200 bg-slate-50 text-xs sm:text-sm outline-none focus:border-orange-500 focus:bg-white focus:ring-2 focus:ring-orange-500/20 transition"
                       />
                     </div>
-
-                    <div className="flex items-center gap-3 w-full sm:w-auto justify-between sm:justify-end">
-                      <button
-                        onClick={() => {
-                          const allOnes = {};
-                          const selectAll = (list) => {
-                            list.forEach((m) => {
-                              allOnes[m.id] = true;
-                              if (m.children) selectAll(m.children);
-                            });
-                          };
-                          selectAll(fetchedModules);
-                          setSelectedModules(allOnes);
-                        }}
-                        className="text-xs font-bold text-[#182b67] hover:text-orange-600 transition cursor-pointer"
-                      >
-                        + Select All Available
-                      </button>
-
-                      <div className="w-1 h-3 bg-slate-300"></div>
-
-                      <button
-                        onClick={() => {
-                          const mandatoryOnly = {};
-                          const resetToMandatory = (list) => {
-                            list.forEach((m) => {
-                              if (m.mandatoryModule) mandatoryOnly[m.id] = true;
-                              if (m.children) resetToMandatory(m.children);
-                            });
-                          };
-                          resetToMandatory(fetchedModules);
-                          setSelectedModules(mandatoryOnly);
-                        }}
-                        className="text-xs font-bold text-slate-500 hover:text-orange-600 transition cursor-pointer flex items-center gap-1"
-                      >
-                        <RotateCcw size={12} />
-                        <span>Reset Core</span>
-                      </button>
-                    </div>
                   </div>
 
-                  {/* Module Cards Grid */}
-                  <div className="p-4 sm:p-6 space-y-3">
-                    {filteredModules.length === 0 ? (
-                      <div className="py-12 text-center text-slate-400 text-sm">
-                        {moduleSearchQuery ? "No modules matching your query." : "Loading modular architecture catalog..."}
+                  {/* 1. STANDALONE BASE MODULES (COMPACT GRID) */}
+                  {standaloneModules.length > 0 && (
+                    <div className="bg-white rounded-3xl border border-slate-200 p-4 sm:p-5 shadow-xs">
+                      <div className="flex items-center justify-between pb-3 mb-3 border-b border-slate-100">
+                        <div className="flex items-center gap-2">
+                          <Sparkles size={16} className="text-orange-500" />
+                          <h4 className="font-INB text-sm text-[#182b67]">Base & Single-Feature Modules</h4>
+                        </div>
+                        <span className="text-[11px] text-slate-500 font-semibold">
+                          {standaloneModules.length} Modules Available
+                        </span>
                       </div>
-                    ) : (
-                      filteredModules.map((m) => (
-                        <ModernModuleRow
-                          key={m.id}
-                          module={m}
-                          level={0}
+
+                      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2.5">
+                        {standaloneModules.map((module) => (
+                          <CompactModuleTile
+                            key={module.id}
+                            module={module}
+                            isSelected={!!selectedModules[module.id]}
+                            toggleModule={toggleModule}
+                          />
+                        ))}
+                      </div>
+                    </div>
+                  )}
+
+                  {/* 2. GROUP MODULES (ELEVATED FEATURE CLUSTERS WITH 3-COL TILE GRIDS) */}
+                  {groupModules.length === 0 && standaloneModules.length === 0 ? (
+                    <div className="bg-white rounded-3xl p-12 text-center text-slate-400 text-sm border border-slate-200">
+                      {moduleSearchQuery ? "No modules matching your search query." : "Loading modular architecture catalog..."}
+                    </div>
+                  ) : (
+                    <div className="space-y-3.5">
+                      {groupModules.map((group) => (
+                        <ModuleGroupCard
+                          key={group.id}
+                          group={group}
                           selectedModules={selectedModules}
                           toggleModule={toggleModule}
+                          defaultExpanded={expandAllGroups}
                         />
-                      ))
-                    )}
-                  </div>
-
-                  {/* Summary Bar at Bottom of Catalog */}
-                  <div className="bg-slate-50 p-4 sm:p-5 border-t border-slate-200/80 flex items-center justify-between">
-                    <div className="text-xs text-slate-600">
-                      Mandatory Core Engine: <span className="font-bold text-[#182b67]">₹ {baseMandatoryPrice.toLocaleString('en-IN')}</span>
+                      ))}
                     </div>
-
-                    <div className="text-right text-xs">
-                      Total Selected: <span className="font-bold text-orange-600">₹ {totalPrice.toLocaleString('en-IN')}</span>
-                    </div>
-                  </div>
+                  )}
                 </div>
               </div>
 
-              {/* Right Column: Sticky Deployment Console & Checkout (4 Cols) */}
-              <div className="lg:col-span-4 lg:sticky lg:top-28 space-y-4">
+              {/* Right Column: Sticky Deployment Console, Live Manifest & SLAs (4 Cols) */}
+              <div className="lg:col-span-4 lg:sticky lg:top-24 space-y-4 lg:max-h-[calc(100vh-6.5rem)] lg:overflow-y-auto lg:scrollbar-thin lg:pr-1">
+                {/* 1. DEPLOYMENT CONSOLE & LIVE QUOTE */}
                 <div className="bg-gradient-to-br from-[#182b67] via-[#101e4a] to-[#0c1636] text-white rounded-3xl p-6 sm:p-7 border border-[#182b67]/60 shadow-xl relative overflow-hidden">
                   
                   {/* Subtle Orange Glow */}
@@ -1237,7 +1350,7 @@ export default function RegistrationForm() {
                         </div>
                         <h4 className="font-INB text-sm uppercase tracking-wider text-white">Deployment Console</h4>
                       </div>
-                      <span className="px-2.5 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider bg-orange-500 text-white">
+                      <span className="px-2.5 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider bg-orange-500 text-white shadow-xs">
                         Live Quote
                       </span>
                     </div>
@@ -1260,7 +1373,7 @@ export default function RegistrationForm() {
                         <button
                           type="button"
                           onClick={() => setDeploymentMode("cloud")}
-                          className={`py-2 px-2.5 rounded-xl text-xs font-bold transition-all text-center ${
+                          className={`py-2 px-2.5 rounded-xl text-xs font-bold transition-all text-center cursor-pointer ${
                             deploymentMode === "cloud"
                               ? 'bg-orange-500 text-white shadow-xs'
                               : 'bg-white/10 text-blue-200 hover:bg-white/15'
@@ -1272,7 +1385,7 @@ export default function RegistrationForm() {
                         <button
                           type="button"
                           onClick={() => setDeploymentMode("onpremise")}
-                          className={`py-2 px-2.5 rounded-xl text-xs font-bold transition-all text-center ${
+                          className={`py-2 px-2.5 rounded-xl text-xs font-bold transition-all text-center cursor-pointer ${
                             deploymentMode === "onpremise"
                               ? 'bg-orange-500 text-white shadow-xs'
                               : 'bg-white/10 text-blue-200 hover:bg-white/15'
@@ -1337,19 +1450,256 @@ export default function RegistrationForm() {
                   </div>
                 </div>
 
-                {/* Direct Engineering Support Card */}
-                <div className="bg-white rounded-3xl p-5 border border-slate-200 shadow-xs flex items-center justify-between gap-3">
-                  <div>
-                    <h5 className="font-INB text-xs text-[#182b67]">Have Specialized Scope Inquiries?</h5>
-                    <p className="text-[11px] text-slate-500">Connect directly with our senior software architects in Mohali.</p>
+                {/* 2. SELECTED ARCHITECTURE MANIFEST (LIVE ACTIVE CAPABILITIES LIST) */}
+                <div className="bg-white rounded-3xl p-5 sm:p-6 border border-slate-200 shadow-xs">
+                  <div className="flex items-center justify-between pb-3 mb-3 border-b border-slate-100">
+                    <div className="flex items-center gap-2.5">
+                      <div className="w-8 h-8 rounded-lg bg-orange-100 text-orange-600 flex items-center justify-center">
+                        <Layers size={16} />
+                      </div>
+                      <div>
+                        <h4 className="font-INB text-sm text-[#182b67]">Architecture Manifest</h4>
+                        <p className="text-[11px] text-slate-500">Live capability composition</p>
+                      </div>
+                    </div>
+                    <span className="px-2.5 py-1 rounded-full text-xs font-bold bg-orange-50 text-orange-700 border border-orange-200">
+                      {totalSelectedCount} Active
+                    </span>
                   </div>
-                  <a
-                    href="tel:+918288029916"
-                    className="p-3 rounded-2xl bg-orange-500 hover:bg-orange-600 text-white transition flex-shrink-0 shadow-md shadow-orange-500/20"
-                    title="Call Senior Architect"
-                  >
-                    <PhoneCall size={16} />
-                  </a>
+
+                  {/* Quick Counter Badges */}
+                  <div className="grid grid-cols-2 gap-2 mb-3">
+                    <div className="p-2.5 rounded-xl bg-slate-50 border border-slate-200 text-center">
+                      <div className="text-[10px] font-bold text-slate-500 uppercase tracking-wider">Mandatory Core</div>
+                      <div className="text-xs font-INB text-[#182b67] mt-0.5">
+                        {selectedModulesList.filter((m) => m.mandatoryModule).length} Modules
+                      </div>
+                    </div>
+                    <div className="p-2.5 rounded-xl bg-orange-50/60 border border-orange-200/70 text-center">
+                      <div className="text-[10px] font-bold text-orange-600 uppercase tracking-wider">Custom Add-ons</div>
+                      <div className="text-xs font-INB text-orange-700 mt-0.5">
+                        {selectedModulesList.filter((m) => !m.mandatoryModule).length} Modules
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Scrollable List of Selected Capabilities */}
+                  <div className="space-y-1.5 max-h-52 overflow-y-auto pr-1 text-xs scrollbar-thin">
+                    {selectedModulesList.length === 0 ? (
+                      <div className="text-center py-6 text-slate-400 text-xs">
+                        No modules selected. Select capabilities from the left panel.
+                      </div>
+                    ) : (
+                      selectedModulesList.map((mod) => (
+                        <div
+                          key={mod.id}
+                          className="flex items-center justify-between p-2 rounded-xl bg-slate-50/80 hover:bg-slate-100 border border-slate-100 transition group"
+                        >
+                          <div className="flex items-center gap-2 min-w-0">
+                            <div className="w-1.5 h-1.5 rounded-full bg-orange-500 flex-shrink-0" />
+                            <span className="font-semibold text-slate-700 truncate" title={mod.name}>
+                              {mod.name}
+                            </span>
+                            {mod.mandatoryModule && (
+                              <span className="text-[8px] font-black uppercase tracking-wider bg-slate-200 text-slate-600 px-1 py-0.2 rounded flex-shrink-0">
+                                Core
+                              </span>
+                            )}
+                          </div>
+
+                          <div className="flex items-center gap-2 flex-shrink-0">
+                            <span className="font-mono text-[11px] font-bold text-slate-600">
+                              ₹{Number(mod.price).toLocaleString('en-IN')}
+                            </span>
+                            {!mod.mandatoryModule && (
+                              <button
+                                type="button"
+                                onClick={(e) => {
+                                  e.stopPropagation();
+                                  toggleModule(mod, false);
+                                }}
+                                className="w-4 h-4 rounded-full text-slate-400 hover:text-rose-600 hover:bg-rose-50 flex items-center justify-center transition cursor-pointer"
+                                title="Remove capability"
+                              >
+                                <X size={11} strokeWidth={2.5} />
+                              </button>
+                            )}
+                          </div>
+                        </div>
+                      ))
+                    )}
+                  </div>
+
+                  <div className="mt-3 pt-2.5 border-t border-slate-100 flex items-center justify-between text-[11px] text-slate-500">
+                    <span>Database Architecture:</span>
+                    <span className="font-bold text-[#182b67]">
+                      ~{Math.max(16, totalSelectedCount * 2)} Schema Tables
+                    </span>
+                  </div>
+                </div>
+
+                {/* 3. ENTERPRISE DEPLOYMENT ROADMAP (4 MILESTONES) */}
+                <div className="bg-white rounded-3xl p-5 sm:p-6 border border-slate-200 shadow-xs">
+                  <div className="flex items-center justify-between pb-3 mb-3 border-b border-slate-100">
+                    <div className="flex items-center gap-2.5">
+                      <div className="w-8 h-8 rounded-lg bg-blue-100 text-[#182b67] flex items-center justify-center">
+                        <Clock size={16} />
+                      </div>
+                      <div>
+                        <h4 className="font-INB text-sm text-[#182b67]">14-Day Deployment Roadmap</h4>
+                        <p className="text-[11px] text-slate-500">Standard implementation timeline</p>
+                      </div>
+                    </div>
+                    <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-blue-50 text-[#182b67] border border-blue-200">
+                      Mohali SLA
+                    </span>
+                  </div>
+
+                  <div className="space-y-3 relative before:absolute before:left-3 before:top-2 before:bottom-2 before:w-0.5 before:bg-slate-200">
+                    {/* Phase 1 */}
+                    <div className="flex items-start gap-3 relative">
+                      <div className="w-6 h-6 rounded-full bg-orange-500 text-white flex items-center justify-center text-[10px] font-black flex-shrink-0 z-10 shadow-xs">
+                        1
+                      </div>
+                      <div className="min-w-0">
+                        <div className="flex items-center justify-between">
+                          <h5 className="font-INB text-xs text-[#182b67]">Private Cloud Sandbox</h5>
+                          <span className="text-[10px] font-bold text-orange-600 bg-orange-50 px-1.5 py-0.2 rounded">Day 01</span>
+                        </div>
+                        <p className="text-[11px] text-slate-500 leading-tight mt-0.5">
+                          Dedicated AWS staging instance initialized with root administrative credentials.
+                        </p>
+                      </div>
+                    </div>
+
+                    {/* Phase 2 */}
+                    <div className="flex items-start gap-3 relative">
+                      <div className="w-6 h-6 rounded-full bg-[#182b67] text-white flex items-center justify-center text-[10px] font-black flex-shrink-0 z-10 shadow-xs">
+                        2
+                      </div>
+                      <div className="min-w-0">
+                        <div className="flex items-center justify-between">
+                          <h5 className="font-INB text-xs text-[#182b67]">Data Migration & Chart Setup</h5>
+                          <span className="text-[10px] font-bold text-slate-500 bg-slate-100 px-1.5 py-0.2 rounded">Days 2-5</span>
+                        </div>
+                        <p className="text-[11px] text-slate-500 leading-tight mt-0.5">
+                          Excel/legacy database extraction, opening ledgers & SKU master ingestion.
+                        </p>
+                      </div>
+                    </div>
+
+                    {/* Phase 3 */}
+                    <div className="flex items-start gap-3 relative">
+                      <div className="w-6 h-6 rounded-full bg-[#182b67] text-white flex items-center justify-center text-[10px] font-black flex-shrink-0 z-10 shadow-xs">
+                        3
+                      </div>
+                      <div className="min-w-0">
+                        <div className="flex items-center justify-between">
+                          <h5 className="font-INB text-xs text-[#182b67]">Role Matrix & Staff Training</h5>
+                          <span className="text-[10px] font-bold text-slate-500 bg-slate-100 px-1.5 py-0.2 rounded">Days 6-10</span>
+                        </div>
+                        <p className="text-[11px] text-slate-500 leading-tight mt-0.5">
+                          Multi-counter cashier permissions, approval hierarchy & staff orientation.
+                        </p>
+                      </div>
+                    </div>
+
+                    {/* Phase 4 */}
+                    <div className="flex items-start gap-3 relative">
+                      <div className="w-6 h-6 rounded-full bg-emerald-600 text-white flex items-center justify-center text-[10px] font-black flex-shrink-0 z-10 shadow-xs">
+                        4
+                      </div>
+                      <div className="min-w-0">
+                        <div className="flex items-center justify-between">
+                          <h5 className="font-INB text-xs text-emerald-800">Production Go-Live & IP Handover</h5>
+                          <span className="text-[10px] font-bold text-emerald-700 bg-emerald-50 px-1.5 py-0.2 rounded">Day 11-14</span>
+                        </div>
+                        <p className="text-[11px] text-slate-500 leading-tight mt-0.5">
+                          Domain pointing, automated GST sync & Git repository perpetual handover.
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* 4. ENTERPRISE ASSURANCES & COMPLIANCE */}
+                <div className="bg-white rounded-3xl p-5 sm:p-6 border border-slate-200 shadow-xs">
+                  <div className="flex items-center gap-2.5 pb-3 mb-3 border-b border-slate-100">
+                    <div className="w-8 h-8 rounded-lg bg-emerald-100 text-emerald-600 flex items-center justify-center">
+                      <ShieldCheck size={16} />
+                    </div>
+                    <h4 className="font-INB text-sm text-[#182b67]">Enterprise Assurances</h4>
+                  </div>
+
+                  <div className="space-y-3 text-xs">
+                    <div className="flex items-start gap-2.5">
+                      <Code2 size={16} className="text-orange-500 flex-shrink-0 mt-0.5" />
+                      <div>
+                        <div className="font-bold text-[#182b67]">100% Code & Database Ownership</div>
+                        <div className="text-[11px] text-slate-500 leading-tight mt-0.5">
+                          Perpetual source code & database Git export. No recurring per-seat SaaS fee traps.
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="flex items-start gap-2.5">
+                      <Receipt size={16} className="text-orange-500 flex-shrink-0 mt-0.5" />
+                      <div>
+                        <div className="font-bold text-[#182b67]">Indian Statutory GST Compliance</div>
+                        <div className="text-[11px] text-slate-500 leading-tight mt-0.5">
+                          GSTR-1, 3B, e-Way bill & e-Invoice automation compliant with Indian tax rules.
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="flex items-start gap-2.5">
+                      <Database size={16} className="text-orange-500 flex-shrink-0 mt-0.5" />
+                      <div>
+                        <div className="font-bold text-[#182b67]">Dedicated Mohali Engineering SLA</div>
+                        <div className="text-[11px] text-slate-500 leading-tight mt-0.5">
+                          Direct phone & screen-share support with core developers at our Mohali R&D centre.
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* 5. DIRECT ENGINEERING SUPPORT & WHATSAPP HOTLINE */}
+                <div className="bg-white rounded-3xl p-5 sm:p-6 border border-slate-200 shadow-xs space-y-3">
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <div className="flex items-center gap-1.5 mb-0.5">
+                        <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+                        <span className="text-[10px] font-bold uppercase tracking-wider text-emerald-600">Senior Architect On-Duty</span>
+                      </div>
+                      <h5 className="font-INB text-sm text-[#182b67]">Have Specialized Scope Inquiries?</h5>
+                      <p className="text-[11px] text-slate-500">Connect directly with our engineering team in Mohali.</p>
+                    </div>
+                  </div>
+
+                  <div className="grid grid-cols-2 gap-2 pt-1">
+                    <a
+                      href="tel:+918288029916"
+                      className="py-2.5 px-3 rounded-xl bg-[#182b67] hover:bg-[#122254] text-white text-xs font-bold transition flex items-center justify-center gap-2 shadow-xs cursor-pointer"
+                    >
+                      <PhoneCall size={14} className="text-orange-400" />
+                      <span>Call Architect</span>
+                    </a>
+
+                    <a
+                      href="https://wa.me/918288029916?text=Hi%20Pisoft%20team,%20I%20am%20configuring%20our%20enterprise%20ERP%20and%20need%20architectural%20guidance"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="py-2.5 px-3 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold transition flex items-center justify-center gap-2 shadow-xs cursor-pointer"
+                    >
+                      <MessageSquare size={14} />
+                      <span>WhatsApp</span>
+                    </a>
+                  </div>
+
+                  <div className="text-[10px] text-slate-400 text-center pt-1 border-t border-slate-100">
+                    Mohali R&D Centre, Punjab • Mon-Sat 9:30 AM - 7:00 PM IST
+                  </div>
                 </div>
               </div>
             </motion.div>
@@ -1430,124 +1780,226 @@ export default function RegistrationForm() {
 }
 
 // =============================================================================
-// SUB-COMPONENTS: MODERN MODULE ROW & FORM INPUTS
+// SUB-COMPONENTS: COMPACT MODULE TILES & ACCORDION CLUSTERS
 // =============================================================================
 
-function ModernModuleRow({ module, level, selectedModules, toggleModule }) {
-  const isSelected = !!selectedModules[module.id];
-  const hasChildren = module.children && module.children.length > 0;
-  const isChild = level > 0;
-
+function CompactModuleTile({ module, isSelected, toggleModule }) {
   return (
-    <div className={`transition-all duration-200 ${isChild ? 'mt-2' : 'mb-3'}`}>
-      <div
-        onClick={() => toggleModule(module, !isSelected)}
-        className={`group relative overflow-hidden transition-all duration-200 cursor-pointer rounded-2xl border ${
-          isChild
-            ? isSelected
-              ? 'bg-orange-50/50 border-orange-300 shadow-xs'
-              : 'bg-white border-slate-200 hover:border-slate-300'
-            : isSelected
-              ? 'bg-white border-orange-400 shadow-sm ring-2 ring-orange-500/10'
-              : 'bg-white border-slate-200 hover:border-slate-300'
-        }`}
-      >
-        {/* Left Status Accent Indicator Bar */}
+    <div
+      onClick={() => toggleModule(module, !isSelected)}
+      className={`group relative p-2.5 sm:p-3 rounded-xl border transition-all duration-150 cursor-pointer flex items-center justify-between gap-2.5 select-none ${
+        isSelected
+          ? 'bg-orange-50/70 border-orange-400 shadow-2xs ring-1 ring-orange-500/10'
+          : 'bg-white border-slate-200 hover:border-orange-300 hover:bg-slate-50/50'
+      }`}
+    >
+      <div className="flex items-center gap-2.5 min-w-0">
         <div
-          className={`absolute left-0 top-0 bottom-0 w-1.5 transition-colors duration-200 ${
+          className={`w-4 h-4 rounded flex items-center justify-center flex-shrink-0 transition-colors ${
             isSelected
-              ? isChild
-                ? 'bg-orange-400'
-                : 'bg-orange-500'
-              : 'bg-slate-200 group-hover:bg-slate-300'
+              ? 'bg-orange-500 text-white'
+              : 'bg-slate-100 border border-slate-300 text-transparent group-hover:border-slate-400'
           }`}
-        />
+        >
+          <Check size={11} strokeWidth={3} />
+        </div>
 
-        <div className="p-3.5 sm:p-4 pl-4 sm:pl-5 flex items-center justify-between gap-3">
-          <div className="flex items-center gap-3">
-            {/* Custom Modern Checkbox */}
-            <div
-              className={`w-5 h-5 rounded-md flex items-center justify-center transition-all flex-shrink-0 ${
-                isSelected
-                  ? 'bg-orange-500 text-white shadow-xs'
-                  : 'bg-slate-100 border border-slate-300 text-transparent'
+        <div className="min-w-0">
+          <div className="flex items-center gap-1.5 flex-wrap">
+            <span
+              className={`text-xs font-bold truncate leading-tight transition-colors ${
+                isSelected ? 'text-[#182b67]' : 'text-slate-700'
               }`}
+              title={module.name}
             >
-              <Check size={13} strokeWidth={3} />
-            </div>
-
-            <div className="flex flex-col">
-              <div className="flex items-center gap-2 flex-wrap">
-                <span
-                  className={`font-INB leading-snug transition-colors ${
-                    isChild ? 'text-xs text-slate-800' : 'text-sm text-[#182b67]'
-                  } ${isSelected && !isChild ? 'text-orange-600' : ''}`}
-                >
-                  {module.name}
-                </span>
-
-                {module.mandatoryModule && (
-                  <span className="text-[9px] bg-slate-100 text-slate-600 px-2 py-0.5 rounded font-bold uppercase tracking-wider border border-slate-200">
-                    Core Mandatory
-                  </span>
-                )}
-              </div>
-
-              <span className="font-mono text-xs font-bold text-orange-600 mt-0.5">
-                ₹ {Number(module.price).toLocaleString('en-IN')}
+              {module.name}
+            </span>
+            {module.mandatoryModule && (
+              <span className="text-[8px] bg-slate-100 text-slate-500 px-1 py-0.2 rounded font-black uppercase tracking-wider flex-shrink-0">
+                Core
               </span>
-            </div>
-          </div>
-
-          {/* Action Icon / Chevron */}
-          <div className="flex items-center gap-2">
-            {hasChildren ? (
-              <div className="flex items-center gap-1 text-[11px] font-semibold text-slate-500">
-                <span className="hidden sm:inline">
-                  {module.children.length} Sub-modules
-                </span>
-                <ChevronDown
-                  size={16}
-                  className={`transition-transform duration-200 ${
-                    isSelected ? 'rotate-180 text-orange-500' : 'text-slate-400'
-                  }`}
-                />
-              </div>
-            ) : (
-              <Zap
-                size={14}
-                className={isSelected ? 'text-orange-500 fill-orange-500' : 'text-slate-300'}
-              />
             )}
           </div>
         </div>
       </div>
 
-      {/* Children Sub-modules Container */}
-      <AnimatePresence>
-        {hasChildren && isSelected && (
-          <motion.div
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: 'auto' }}
-            exit={{ opacity: 0, height: 0 }}
-            transition={{ duration: 0.2 }}
-            className="ml-4 sm:ml-6 mt-1.5 pl-3 sm:pl-4 py-2 border-l-2 border-orange-400/60 space-y-2 overflow-hidden"
+      <span className="font-mono text-[11px] font-bold text-orange-600 flex-shrink-0">
+        ₹{Number(module.price).toLocaleString('en-IN')}
+      </span>
+    </div>
+  );
+}
+
+function ModuleGroupCard({ group, selectedModules, toggleModule, defaultExpanded }) {
+  const [isOpen, setIsOpen] = useState(defaultExpanded ?? true);
+
+  // Sync state if expand all changes
+  useEffect(() => {
+    if (defaultExpanded !== undefined) setIsOpen(defaultExpanded);
+  }, [defaultExpanded]);
+
+  // Collect all items in this group
+  const allGroupItems = useMemo(() => {
+    const list = [];
+    const collect = (m) => {
+      list.push(m);
+      m.children?.forEach(collect);
+    };
+    collect(group);
+    return list;
+  }, [group]);
+
+  const selectedCount = allGroupItems.filter((m) => selectedModules[m.id]).length;
+  const isSelected = !!selectedModules[group.id];
+
+  const subGroups = (group.children || []).filter((c) => c.children && c.children.length > 0);
+  const directLeaves = (group.children || []).filter((c) => !c.children || c.children.length === 0);
+
+  return (
+    <div className="bg-white rounded-2xl sm:rounded-3xl border border-slate-200 shadow-xs overflow-hidden transition-all duration-200">
+      {/* Group Header Bar */}
+      <div className="p-4 sm:p-5 flex items-center justify-between gap-3 bg-gradient-to-r from-slate-50/80 via-white to-slate-50/50 border-b border-slate-100">
+        <div className="flex items-center gap-3 min-w-0">
+          <div
+            onClick={(e) => {
+              e.stopPropagation();
+              toggleModule(group, !isSelected);
+            }}
+            className={`w-5 h-5 rounded-md flex items-center justify-center cursor-pointer transition-colors flex-shrink-0 ${
+              isSelected
+                ? 'bg-orange-500 text-white'
+                : 'bg-white border-2 border-slate-300 hover:border-orange-400'
+            }`}
           >
-            <div className="text-[10px] font-bold text-slate-500 uppercase tracking-wider px-1">
-              Included Functional Sub-capabilities
+            {isSelected && <Check size={13} strokeWidth={3} />}
+          </div>
+
+          <div className="min-w-0">
+            <div className="flex items-center gap-2 flex-wrap">
+              <h4 className="font-INB text-sm sm:text-base text-[#182b67] truncate">
+                {group.name}
+              </h4>
+              {group.mandatoryModule && (
+                <span className="text-[9px] bg-orange-100 text-orange-700 font-bold px-2 py-0.5 rounded-full border border-orange-200">
+                  Core Mandatory
+                </span>
+              )}
             </div>
-            {module.children.map((child) => (
-              <ModernModuleRow
-                key={child.id}
-                module={child}
-                level={1}
-                selectedModules={selectedModules}
-                toggleModule={toggleModule}
+            <div className="text-[11px] text-slate-500 flex items-center gap-2 mt-0.5">
+              <span>{allGroupItems.length - 1} Capabilities</span>
+              <span>•</span>
+              <span className="text-orange-600 font-bold">
+                {selectedCount} Active
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <div className="flex items-center gap-3">
+          <span className="font-mono text-xs sm:text-sm font-bold text-orange-600 hidden sm:inline">
+            ₹{Number(group.price).toLocaleString('en-IN')}
+          </span>
+          <button
+            onClick={() => setIsOpen(!isOpen)}
+            className="p-1.5 rounded-xl hover:bg-slate-100 text-slate-400 hover:text-slate-700 transition cursor-pointer"
+          >
+            <ChevronDown
+              size={18}
+              className={`transition-transform duration-200 ${isOpen ? 'rotate-180 text-orange-500' : ''}`}
+            />
+          </button>
+        </div>
+      </div>
+
+      {/* Group Body: Clean Sub-group Clusters & Leaf Grid */}
+      {isOpen && (
+        <div className="p-4 sm:p-5 space-y-3.5">
+          {/* Sub-groups with children (e.g. General) */}
+          {subGroups.map((sub) => (
+            <SubGroupCluster
+              key={sub.id}
+              sub={sub}
+              selectedModules={selectedModules}
+              toggleModule={toggleModule}
+            />
+          ))}
+
+          {/* Direct leaves under this group */}
+          {directLeaves.length > 0 && (
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2">
+              {directLeaves.map((leaf) => (
+                <CompactModuleTile
+                  key={leaf.id}
+                  module={leaf}
+                  isSelected={!!selectedModules[leaf.id]}
+                  toggleModule={toggleModule}
+                />
+              ))}
+            </div>
+          )}
+        </div>
+      )}
+    </div>
+  );
+}
+
+function SubGroupCluster({ sub, selectedModules, toggleModule }) {
+  const [isSubOpen, setIsSubOpen] = useState(true);
+  const isSelected = !!selectedModules[sub.id];
+
+  return (
+    <div className="rounded-2xl bg-slate-50/70 border border-slate-200/80 p-3.5 sm:p-4 overflow-hidden">
+      <div className="flex items-center justify-between pb-2.5 mb-2.5 border-b border-slate-200/70">
+        <div
+          onClick={() => toggleModule(sub, !isSelected)}
+          className="flex items-center gap-2.5 cursor-pointer min-w-0"
+        >
+          <div
+            className={`w-4 h-4 rounded flex items-center justify-center flex-shrink-0 transition-colors ${
+              isSelected ? 'bg-orange-500 text-white' : 'bg-white border border-slate-300'
+            }`}
+          >
+            {isSelected && <Check size={11} strokeWidth={3} />}
+          </div>
+          <span className="font-INB text-xs sm:text-sm text-[#182b67] truncate">
+            {sub.name}
+          </span>
+          <span className="text-[10px] text-slate-400 font-semibold px-2 py-0.5 rounded-full bg-white border border-slate-200">
+            {sub.children?.length || 0} features
+          </span>
+        </div>
+
+        <div className="flex items-center gap-2">
+          <span className="font-mono text-xs font-bold text-orange-600">
+            ₹{Number(sub.price).toLocaleString('en-IN')}
+          </span>
+          {sub.children && sub.children.length > 0 && (
+            <button
+              onClick={() => setIsSubOpen(!isSubOpen)}
+              className="p-1 rounded-lg text-slate-400 hover:text-slate-600 hover:bg-slate-200/50 transition cursor-pointer"
+            >
+              <ChevronDown
+                size={15}
+                className={`transition-transform duration-200 ${isSubOpen ? 'rotate-180 text-orange-500' : ''}`}
               />
-            ))}
-          </motion.div>
-        )}
-      </AnimatePresence>
+            </button>
+          )}
+        </div>
+      </div>
+
+      {/* Grid of Compact Tiles for Sub-group items */}
+      {isSubOpen && sub.children && sub.children.length > 0 && (
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2">
+          {sub.children.map((child) => (
+            <CompactModuleTile
+              key={child.id}
+              module={child}
+              isSelected={!!selectedModules[child.id]}
+              toggleModule={toggleModule}
+            />
+          ))}
+        </div>
+      )}
     </div>
   );
 }

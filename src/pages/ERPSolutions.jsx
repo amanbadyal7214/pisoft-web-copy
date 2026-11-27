@@ -1672,21 +1672,25 @@ export default function ERPSolutions() {
                 </p>
               </div>
 
-              <div className='space-y-3.5'>
+              <div className='space-y-2 sm:space-y-2.5'>
                 {faqs.map((faq, index) => {
                   const isOpen = openFaq === index
                   return (
                     <div
                       key={index}
-                      className='rounded-2xl border border-slate-200 overflow-hidden transition-colors'
+                      className={`rounded-xl sm:rounded-2xl border transition-colors overflow-hidden ${
+                        isOpen ? 'border-orange-400 bg-white shadow-xs' : 'border-slate-200 hover:border-orange-300'
+                      }`}
                     >
                       <button
                         onClick={() => setOpenFaq(isOpen ? null : index)}
-                        className='w-full p-4 sm:p-5 text-left font-INB text-blue-950 hover:text-orange-600 transition flex items-center justify-between gap-4 bg-slate-50/70 hover:bg-slate-100 cursor-pointer'
+                        className='w-full py-2.5 sm:py-3 px-4 sm:px-5 text-left font-INB text-blue-950 hover:text-orange-600 transition flex items-center justify-between gap-4 bg-slate-50/70 hover:bg-slate-100 cursor-pointer'
                       >
-                        <span className='text-sm sm:text-base leading-snug'>{faq.q}</span>
+                        <span className={`text-xs sm:text-sm md:text-[15px] leading-snug ${isOpen ? 'text-orange-600' : 'text-blue-950'}`}>
+                          {faq.q}
+                        </span>
                         <ChevronDown
-                          size={18}
+                          size={16}
                           className={`text-slate-400 flex-shrink-0 transition-transform duration-300 ${
                             isOpen ? 'rotate-180 text-orange-500' : ''
                           }`}
@@ -1698,9 +1702,9 @@ export default function ERPSolutions() {
                             initial={{ height: 0, opacity: 0 }}
                             animate={{ height: 'auto', opacity: 1 }}
                             exit={{ height: 0, opacity: 0 }}
-                            transition={{ duration: 0.3 }}
+                            transition={{ duration: 0.25 }}
                           >
-                            <div className='p-4 sm:p-5 pt-2 text-slate-600 text-xs sm:text-sm leading-relaxed bg-white border-t border-slate-100'>
+                            <div className='px-4 sm:px-5 py-3 pt-1 text-slate-600 text-xs sm:text-sm leading-relaxed bg-white border-t border-slate-100'>
                               {faq.a}
                             </div>
                           </motion.div>
