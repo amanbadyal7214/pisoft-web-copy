@@ -72,7 +72,7 @@ function App() {
         <Route path="/ERPservices/Medical&Healthcare" element={<ERPMedHealth />} />
         <Route path="/ERPservices/TourTravels" element={<ERPTourTravels />} />
         <Route path="/Alltechnologies/:id/:name" element={<SidebarDemo />} />
-        {/* <Route path="/applyforInternship" element={<LoginUser />} /> */}
+        <Route path="/applyforInternship" element={<LoginUser />} />
         <Route path="/LoginRegisterUser" element={<LoginRegisterUser />} />
         <Route path="/RegisterUser" element={<RegisterUser />} />
         <Route path="/WebApplications" element={<WebApplication />} />

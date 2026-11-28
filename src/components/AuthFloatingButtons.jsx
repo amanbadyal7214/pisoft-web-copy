@@ -6,12 +6,12 @@ import { Link } from "react-router-dom";
 import { baseURl } from "../../baseURL";
 
 const buttonConfig = [
-  // {
-  //   label: "Apply for Internship",
-  //   icon: <FiBriefcase className="w-4 h-4 md:w-5 md:h-5" />,
-  //   mobileIcon: <FiBriefcase className="w-3.5 h-3.5" />,
-  //   link: "/applyforInternship",
-  // },
+  {
+    label: "Apply for Internship",
+    icon: <FiBriefcase className="w-4 h-4 md:w-5 md:h-5" />,
+    mobileIcon: <FiBriefcase className="w-3.5 h-3.5" />,
+    link: "/applyforInternship",
+  },
   {
     label: "Take a Test",
     icon: <FaPenFancy className="w-4 h-4 md:w-5 md:h-5" />,

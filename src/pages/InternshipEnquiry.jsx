@@ -9,7 +9,7 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { DotLottieReact } from '@lottiefiles/dotlottie-react'
 import { baseURl2 } from '../../baseURL'
 import { Helmet } from 'react-helmet'
-import { User, GraduationCap, Book, X, Receipt, PartyPopper, MessageSquare, CreditCard, CheckCircle2, Search, Clock, Zap, TrendingUp } from 'lucide-react'
+import { User, GraduationCap, Book, X, Receipt, PartyPopper, MessageSquare, CreditCard, CheckCircle2, Search, Clock, Zap, TrendingUp, FileText, Upload } from 'lucide-react'
 import ReactConfetti from 'react-confetti'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -42,7 +42,8 @@ export default function InternshipEnquiry() {
 
   const [formData, setFormData] = useState({
     name: '', email: '', mobileNo: '', university: '',
-    className: '', semester: '', category: '', technology: '', courseId: ''
+    className: '', semester: '', category: '', technology: '', courseId: '',
+    cv: null
   })
 
   const [categories, setCategories] = useState([])
@@ -144,10 +145,19 @@ export default function InternshipEnquiry() {
   }, [formData.courseId])
 
   const handleChange = e => {
-    const { name, value } = e.target
+    const { name, value, files } = e.target
     if (name === "mobileNo") {
       const val = value.replace(/\D/g, "").slice(0, 10);
       setFormData(f => ({ ...f, [name]: val }));
+    } else if (name === "cv" && files) {
+      const file = files[0];
+      if (file) {
+        if (file.size > 5 * 1024 * 1024) {
+          toast.error("File size exceeds 5MB. Please upload a smaller file.");
+          return;
+        }
+        setFormData(f => ({ ...f, cv: file }));
+      }
     } else {
       setFormData(f => ({ ...f, [name]: value }));
     }
@@ -190,11 +200,39 @@ export default function InternshipEnquiry() {
 
     const tid = toast.loading("Processing Enquiry...");
     try {
-      const res = await fetch(`${baseURl2}/course-applications`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(payload)
-      });
+      let res;
+      if (formData.cv) {
+        const multipartData = new FormData();
+        multipartData.append('application', new Blob([JSON.stringify(payload)], { type: 'application/json' }));
+        multipartData.append('file', formData.cv);
+        multipartData.append('resume', formData.cv);
+        multipartData.append('cv', formData.cv);
+        Object.keys(payload).forEach(key => {
+          if (payload[key] !== null && payload[key] !== undefined) {
+            multipartData.append(key, payload[key]);
+          }
+        });
+
+        res = await fetch(`${baseURl2}/course-applications`, {
+          method: 'POST',
+          body: multipartData
+        });
+
+        if (res.status === 415) {
+          res = await fetch(`${baseURl2}/course-applications`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload)
+          });
+        }
+      } else {
+        res = await fetch(`${baseURl2}/course-applications`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        });
+      }
+
       if (res.ok) {
         toast.update(tid, { render: "Enquiry Sent! Our team will contact you.", type: "success", isLoading: false, autoClose: 3000 });
         setIsModalOpen(false);
@@ -418,6 +456,65 @@ export default function InternshipEnquiry() {
                 </select>
               </div>
 
+              <div>
+                <div className='flex items-center justify-between mb-4'>
+                  <h3 className='flex items-center gap-2 text-orange-600 font-bold text-sm uppercase tracking-widest'>
+                    <FileText size={16} /> Upload CV / Resume
+                  </h3>
+                  <span className='text-[11px] font-semibold text-slate-400'>
+                    (Optional • PDF, DOC, DOCX up to 5MB)
+                  </span>
+                </div>
+
+                {!formData.cv ? (
+                  <label className='flex flex-col sm:flex-row items-center justify-center gap-3 p-4 sm:p-5 border-2 border-dashed border-gray-200 hover:border-orange-400 rounded-2xl cursor-pointer bg-slate-50/60 hover:bg-orange-50/40 transition-all group'>
+                    <div className='w-10 h-10 rounded-xl bg-orange-100 text-orange-600 flex items-center justify-center flex-shrink-0 group-hover:scale-105 transition-transform'>
+                      <Upload size={18} />
+                    </div>
+                    <div className='text-center sm:text-left'>
+                      <p className='text-xs sm:text-sm font-bold text-slate-700 group-hover:text-orange-600 transition-colors'>
+                        Click to browse or drag & drop your CV
+                      </p>
+                      <p className='text-[11px] text-slate-400 mt-0.5'>
+                        Supported formats: PDF, DOC, DOCX
+                      </p>
+                    </div>
+                    <input
+                      type='file'
+                      name='cv'
+                      id='cv'
+                      accept='.pdf,.doc,.docx'
+                      onChange={handleChange}
+                      className='hidden'
+                    />
+                  </label>
+                ) : (
+                  <div className='flex items-center justify-between p-3.5 sm:p-4 bg-orange-50/80 border border-orange-200 rounded-2xl'>
+                    <div className='flex items-center gap-3 min-w-0'>
+                      <div className='w-10 h-10 rounded-xl bg-orange-500 text-white flex items-center justify-center flex-shrink-0'>
+                        <FileText size={18} />
+                      </div>
+                      <div className='min-w-0'>
+                        <p className='text-xs sm:text-sm font-bold text-slate-800 truncate'>
+                          {formData.cv.name}
+                        </p>
+                        <p className='text-[10px] text-slate-500 font-medium'>
+                          {(formData.cv.size / (1024 * 1024)).toFixed(2)} MB • Attached
+                        </p>
+                      </div>
+                    </div>
+                    <button
+                      type='button'
+                      onClick={() => setFormData(f => ({ ...f, cv: null }))}
+                      className='p-1.5 hover:bg-orange-200/60 text-slate-500 hover:text-red-500 rounded-lg transition-colors flex-shrink-0 ml-2'
+                      title='Remove file'
+                    >
+                      <X size={16} />
+                    </button>
+                  </div>
+                )}
+              </div>
+
               <motion.button whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }} type='submit' className='bg-[#F07C22] text-white font-bold py-4 px-12 rounded-2xl transition-all shadow-xl shadow-orange-200'>
                 PROCEED TO SUMMARY
               </motion.button>
@@ -510,6 +607,12 @@ export default function InternshipEnquiry() {
                   <div className='flex justify-between text-gray-800'><span>Registration Fee</span><span>₹{registrationFee}</span></div>
                   <div className='flex justify-between text-gray-800'><span>Course Fee </span><span>₹{displayCourseFee}</span></div>
                   {isCouponApplied && <div className='flex justify-between text-green-600 font-medium'><span>Scholarship Discount</span><span>- ₹2,000</span></div>}
+                  {formData.cv && (
+                    <div className='flex justify-between text-gray-800 pt-1 border-t border-dashed border-gray-100'>
+                      <span className='flex items-center gap-1 text-slate-500'><FileText size={12} /> Attached CV</span>
+                      <span className='font-semibold text-slate-700 truncate max-w-[130px]'>{formData.cv.name}</span>
+                    </div>
+                  )}
                   <div className='flex justify-between pt-2 text-[#002147] font-black text-lg'><span>Net Total</span><span>₹{discountedTotal}</span></div>
                 </div>
 
