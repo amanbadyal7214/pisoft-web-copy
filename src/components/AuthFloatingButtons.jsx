@@ -16,7 +16,7 @@ const buttonConfig = [
     label: "Take a Test",
     icon: <FaPenFancy className="w-4 h-4 md:w-5 md:h-5" />,
     mobileIcon: <FaPenFancy className="w-3.5 h-3.5" />,
-    link: "https://project.pisofterp.com/pp/test-system/take-test",
+    link: "https://project.pisofterp.com/pipl/test-system/take-test",
     isPrimary: true,
   },
   {
@@ -226,7 +226,7 @@ const AuthFloatingButtons = () => {
 
               {/* 2. TAKE A TEST BUTTON (Directly visible & highlighted with pulse badge) */}
               <motion.a
-                href="https://project.pisofterp.com/pp/test-system/take-test"
+                href="https://project.pisofterp.com/pipl/test-system/take-test"
                 target="_blank"
                 rel="noopener noreferrer"
                 whileTap={{ scale: 0.94 }}
